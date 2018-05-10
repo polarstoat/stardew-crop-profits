@@ -11,26 +11,28 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<div class="container">
-		<form class="form-row">
-			<div class="col-3 form-group">
-				<label for="day">Day</label>
-				<input type="number" id="day" class="form-control" placeholder="1" min="1" max="28" pattern="\d*">
-			</div>
-			<div class="col-6 form-group">
-				<label for="season">Season</label>
-				<select id="season" class="form-control">
-					<option value="spring">Spring</option>
-					<option value="summer">Summer</option>
-					<option value="fall">Fall</option>
-					<option value="winter">Winter</option>
-				</select>
-			</div>
-			<div class="col-3 form-group">
-				<label for="year">Year</label>
-				<input type="number" id="year" class="form-control" placeholder="1" min="1" pattern="\d*">
-			</div>
-		</form>
+	<div class="date-form stardew-valley-menu-style">
+		<div class="container">
+			<form class="form-row">
+				<div class="col-3 form-group">
+					<label for="day">Day</label>
+					<input type="number" id="day" class="form-control" placeholder="1" min="1" max="28" pattern="\d*">
+				</div>
+				<div class="col-6 form-group">
+					<label for="season">Season</label>
+					<select id="season" class="custom-select">
+						<option value="spring" selected>Spring</option>
+						<option value="summer">Summer</option>
+						<option value="fall">Fall</option>
+						<option value="winter">Winter</option>
+					</select>
+				</div>
+				<div class="col-3 form-group">
+					<label for="year">Year</label>
+					<input type="number" id="year" class="form-control" placeholder="1" min="1" pattern="\d*">
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

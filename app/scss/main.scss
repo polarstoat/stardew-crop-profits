@@ -1,6 +1,9 @@
+$very-pale-yellow: #fff4d9;
+$dark-brown: #4d3526;
+
 body {
-	background-color: lighten(#fff4d9, 2%);
-	color: #4d3526;
+	background-color: lighten($very-pale-yellow, 2%);
+	color: $dark-brown;
 }
 header h1 {
 	margin-top: .5rem;
@@ -20,9 +23,9 @@ header h1 {
 		color: #5b2b2a;
 	}
 	.form-control, .custom-select {
-		background-color: #fff4d9;
+		background-color: $very-pale-yellow;
 		border-color: #d68f54;
-		color: #4d3526;
+		color: $dark-brown;
 
 		&:focus {
 			box-shadow: 0 0 0 .2rem rgba(250,147,5,.35);

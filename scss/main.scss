@@ -8,17 +8,20 @@
 	/* box-shadow used to create a multiple border effect. Colours from the border used on Stardew Valley menus, see MenuTiles.png */
 	box-shadow: 0 0 0 2px #d68f54, 0 0 0 4px #853605, 0 0 0 6px #fa9305, 0 0 0 8px #b14e05, 0 0 0 10px #5b2b2a;
 }
-.stardew-valley-menu-style label {
-	color: #5b2b2a;
-}
-.stardew-valley-menu-style .form-control, .stardew-valley-menu-style .custom-select {
-	background-color: #fff4d9;
-	border-color: #d68f54;
-	color: #4d3526;
-}
-.stardew-valley-menu-style .form-control::placeholder {
-	color: #a3795f;
-}
-.stardew-valley-menu-style .form-control:focus, .stardew-valley-menu-style .custom-select:focus {
-	box-shadow: 0 0 0 .2rem rgba(250,147,5,.35);
+.stardew-valley-menu-style {
+	label {
+		color: #5b2b2a;
+	}
+	.form-control, .custom-select {
+		background-color: #fff4d9;
+		border-color: #d68f54;
+		color: #4d3526;
+
+		&:focus {
+			box-shadow: 0 0 0 .2rem rgba(250,147,5,.35);
+		}
+	}
+	.form-control::placeholder {
+		color: #a3795f;
+	}
 }

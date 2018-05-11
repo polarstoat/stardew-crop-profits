@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "browser-sync --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
     "url": "https://github.com/polarstoat/stardew-crop-profits/issues"
   },
   "homepage": "https://github.com/polarstoat/stardew-crop-profits#readme",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "browser-sync": "^2.24.4"
+  }
 }

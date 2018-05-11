@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint --no-ignore .eslintrc.js .",
     "test": "npm run lint",
-    "watch": "browser-sync --watch"
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "browser-sync": "^2.24.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint-plugin-import": "^2.11.0",
+    "gulp": "^3.9.1"
   }
 }

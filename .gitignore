@@ -1,3 +1,6 @@
 # This is where compiled and minified SASS goes and would clog up diffs, so
 # only commit when pushing a release to master
 app/css/
+
+# Ignore our data for the moment
+app/js/crops.json

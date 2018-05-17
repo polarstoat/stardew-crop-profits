@@ -104,7 +104,9 @@ function init() {
 
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<th scope="row">${crop.name}</th><td>${crop.avgProfit.toFixed(2)}</td>`;
+      // TODO: Use CSS to display icon?
+      // TODO: Don't hotlink to Stardew Valley Wiki
+      tr.innerHTML = `<th scope="row">${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${crop.avgProfit.toFixed(2)}g</span></td>`;
       tbody.appendChild(tr);
     });
   }

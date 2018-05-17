@@ -128,14 +128,21 @@ function init() {
     throw new Error(`Failed to convert season '${str}' to integer`);
   }
 
-  function parseCropData(cropData) {
-    // These are in crops.json but not a directly plantable crop, so ignored
-    const CROPS_TO_IGNORE = ['Wild Horseradish', 'Spice Berry', 'Common Mushroom', 'Winter Root'];
+  /**
+   * Test if a crop is a wild seed crop, e.g. 'Wild Horseradish', 'Spice Berry', etc.
+   * This code is pretty much identical to what's used in the game's Crop.cs file
+   * @param  {object}  crop A crop object
+   * @return {Boolean}      Whether the crop is a wild seed crop
+   */
+  function isWildSeedCrop(crop) {
+    return crop.rowInSpriteSheet === 23;
+  }
 
+  function parseCropData(cropData) {
     Object.values(cropData).forEach((crop) => {
       const cleanCrop = crop;
 
-      if (CROPS_TO_IGNORE.indexOf(crop.name) > -1) return;
+      if (isWildSeedCrop(crop)) return;
 
       cleanCrop.daysToGrow = crop.phaseDays.reduce((a, b) => a + b, 0);
       cleanCrop.daysToRegrow = (crop.regrowAfterHarvest === -1) ? 0 : crop.regrowAfterHarvest;

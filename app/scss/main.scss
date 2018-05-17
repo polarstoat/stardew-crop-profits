@@ -9,7 +9,7 @@ header h1 {
 	margin-top: .5rem;
 }
 .date-form {
-	margin-top: 1.25rem;
+	margin: 1.25rem 0;
 	padding-top: .75rem;
 }
 .stardew-valley-menu-style {
@@ -35,3 +35,10 @@ header h1 {
 		color: #a3795f;
 	}
 }
+.table thead th {
+	border-top: none;
+}
+.table .loading td {
+	text-align: center;
+}
+

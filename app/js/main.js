@@ -41,6 +41,7 @@ function getJSON(url) {
 function init() {
   const SEASONS = ['spring', 'summer', 'fall', 'winter'];
   const SEASON_LENGTH = 28;
+  const YEAR_LENGTH = SEASON_LENGTH * 4;
 
   const crops = [];
   const date = {
@@ -76,7 +77,7 @@ function init() {
     crops.forEach((crop) => {
       const cleanCrop = crop;
 
-      const dayOfYear = date.timestamp % (SEASON_LENGTH * 4);
+      const dayOfYear = date.timestamp % YEAR_LENGTH;
 
       if (dayOfYear < crop.seasonStartDate
         || dayOfYear + crop.daysToGrow >= crop.seasonEndDate) return;
@@ -166,7 +167,7 @@ function init() {
     }
 
     date.timestamp =
-      ((date.year - 1) * (SEASON_LENGTH * 4))
+      ((date.year - 1) * YEAR_LENGTH)
       + (seasonToInt(date.season) * SEASON_LENGTH)
       + (date.day - 1);
 

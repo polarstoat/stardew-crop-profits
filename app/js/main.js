@@ -66,6 +66,10 @@ function init() {
     return cheapest;
   }
 
+  function formatPrice(num) {
+    return /\.[\d]{3,}/.test(num.toString()) ? num.toFixed(2) : num;
+  }
+
   function update() {
     const cultivatableCrops = [];
 
@@ -106,7 +110,7 @@ function init() {
       const tr = document.createElement('tr');
       // TODO: Use CSS to display icon?
       // TODO: Don't hotlink to Stardew Valley Wiki
-      tr.innerHTML = `<th scope="row">${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${crop.avgProfit.toFixed(2)}g</span></td>`;
+      tr.innerHTML = `<th scope="row">${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formatPrice(crop.avgProfit)}g</span></td>`;
       tbody.appendChild(tr);
     });
   }

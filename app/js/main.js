@@ -50,6 +50,9 @@ function init() {
     year: 1,
     timestamp: 0,
   };
+  const options = {
+    includeChanceForExtraCrops: false,
+  };
 
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;
@@ -87,11 +90,13 @@ function init() {
         ? Math.ceil((crop.seasonEndDate - dayOfYear - crop.daysToGrow) / crop.daysToRegrow)
         : 1;
 
-      // TODO: Add chance for extra crops multiplier
+      let cropYield = crop.harvest.minHarvest || 1;
+      if (options.includeChanceForExtraCrops) {
+        cropYield *= 1 + (crop.harvest.chanceForExtraCrops || 0);
+      }
+
       // TODO: Add 'Tiller' profession crop value multiplier
-      const revenue = (crop.harvest.minHarvest)
-        ? crop.sellPrice * harvests * crop.harvest.minHarvest
-        : crop.sellPrice * harvests;
+      const revenue = crop.sellPrice * harvests * cropYield;
       const profit = revenue - cheapestSeedPrice(crop.seed);
       const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
 

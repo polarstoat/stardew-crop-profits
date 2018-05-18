@@ -52,6 +52,7 @@ function init() {
   };
   const options = {
     includeChanceForExtraCrops: false,
+    payForSeeds: true,
   };
 
   function cheapestSeedPrice(seed) {
@@ -106,7 +107,10 @@ function init() {
 
       // TODO: Add 'Tiller' profession crop value multiplier
       const revenue = crop.sellPrice * harvests * cropYield;
-      const profit = revenue - cheapestSeedPrice(crop.seed);
+
+      let profit = revenue;
+      if (options.payForSeeds) profit -= cheapestSeedPrice(crop.seed);
+
       const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
 
       cleanCrop.avgProfit = avgProfit;

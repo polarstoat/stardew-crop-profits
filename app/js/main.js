@@ -190,10 +190,15 @@ function init() {
     if (crops.length) update();
   }
 
-  // Add event listeners to date inputs
-  document.getElementById('day').addEventListener('input', dateChanged);
-  document.getElementById('season').addEventListener('change', dateChanged);
-  document.getElementById('year').addEventListener('input', dateChanged);
+  /**
+   * Adds event listeners to date inputs
+   */
+  function bindUI() {
+    document.getElementById('day').addEventListener('input', dateChanged);
+    document.getElementById('season').addEventListener('change', dateChanged);
+    document.getElementById('year').addEventListener('input', dateChanged);
+  }
+  bindUI();
 
   getJSON('js/crops.json').then(parseCropData);
 }

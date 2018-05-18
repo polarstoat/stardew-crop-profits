@@ -74,6 +74,16 @@ function init() {
     return /\.[\d]{3,}/.test(num.toString()) ? num.toFixed(2) : num;
   }
 
+  /**
+   * Checks whether a crop has enough time to grow
+   * @param  {Object} crop      A crop object
+   * @param  {number} dayOfYear The day of the year, counted from 0 (e.g. 'Spring 1st' would be 0)
+   * @return {boolean}           Whether the crop can grow
+   */
+  function canGrow(crop, dayOfYear) {
+    return dayOfYear >= crop.seasonStartDate && dayOfYear + crop.daysToGrow < crop.seasonEndDate;
+  }
+
   function update() {
     const cultivatableCrops = [];
 
@@ -82,8 +92,7 @@ function init() {
 
       const dayOfYear = date.timestamp % YEAR_LENGTH;
 
-      if (dayOfYear < crop.seasonStartDate
-        || dayOfYear + crop.daysToGrow >= crop.seasonEndDate) return;
+      if (!canGrow(crop, dayOfYear)) return;
 
       // TODO: Add 'Agriculturist' profession multiplier to crop.daysToGrow
       const harvests = (crop.daysToRegrow)

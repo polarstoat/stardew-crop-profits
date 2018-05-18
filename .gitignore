@@ -4,3 +4,6 @@ app/css/
 
 # Ignore our data for the moment
 app/js/crops.json
+
+# Ignore the sprites for the moment
+app/img/springobjects.png

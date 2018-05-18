@@ -139,7 +139,8 @@ function init() {
       const tr = document.createElement('tr');
       // TODO: Use CSS to display icon?
       // TODO: Don't hotlink to Stardew Valley Wiki
-      tr.innerHTML = `<th scope="row">${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formatPrice(crop.avgProfit)}g</span></td>`;
+      // console.log(crop.name, , );
+      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formatPrice(crop.avgProfit)}g</span></td>`;
       tbody.appendChild(tr);
     });
   }

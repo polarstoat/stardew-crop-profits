@@ -101,9 +101,7 @@ function init() {
         : 1;
 
       let cropYield = crop.harvest.minHarvest || 1;
-      if (options.includeChanceForExtraCrops) {
-        cropYield *= 1 + (crop.harvest.chanceForExtraCrops || 0);
-      }
+      if (options.includeChanceForExtraCrops) cropYield += (crop.harvest.chanceForExtraCrops || 0);
 
       // TODO: Add 'Tiller' profession crop value multiplier
       const revenue = crop.sellPrice * harvests * cropYield;

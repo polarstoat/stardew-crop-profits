@@ -53,12 +53,21 @@ function init() {
   const options = {
     includeChanceForExtraCrops: false,
     payForSeeds: true,
+    vendors: {
+      generalStore: true,
+      jojaMart: true,
+      travelingCart: false,
+      oasis: true,
+      eggFestival: true,
+    },
   };
 
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;
 
     Object.keys(seed.vendor).forEach((vendor, i, vendors) => {
+      if (!options.vendors[vendor]) return;
+
       // If the seed is only available from the Traveling Cart
       if (vendors.length === 1 && vendor === 'travelingCart') {
         // If the seed has a normal price, use that
@@ -95,6 +104,9 @@ function init() {
 
       if (!canGrow(crop, dayOfYear)) return;
 
+      const seedPrice = cheapestSeedPrice(crop.seed);
+      if (options.payForSeeds && seedPrice === Infinity) return;
+
       // TODO: Add 'Agriculturist' profession multiplier to crop.daysToGrow
       const harvests = (crop.daysToRegrow)
         ? Math.ceil((crop.seasonEndDate - dayOfYear - crop.daysToGrow) / crop.daysToRegrow)
@@ -107,7 +119,7 @@ function init() {
       const revenue = crop.sellPrice * harvests * cropYield;
 
       let profit = revenue;
-      if (options.payForSeeds) profit -= cheapestSeedPrice(crop.seed);
+      if (options.payForSeeds) profit -= seedPrice;
 
       const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
 

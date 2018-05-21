@@ -136,9 +136,14 @@ function init() {
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice;
 
-      const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
+      const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
+      const avgProfit = profit / totalGrowingDays;
 
       cleanCrop.avgProfit = avgProfit;
+      cleanCrop.totalGrowingDays = totalGrowingDays;
+      cleanCrop.harvests = harvests;
+      cleanCrop.yield = cropYield;
+      cleanCrop.seedPrice = seedPrice;
       cleanCrop.profit = profit;
 
       cultivatableCrops.push(cleanCrop);
@@ -155,8 +160,7 @@ function init() {
       const tr = document.createElement('tr');
       // TODO: Use CSS to display icon?
       // TODO: Don't hotlink to Stardew Valley Wiki
-      // console.log(crop.name, , );
-      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${formatPrice(crop.profit)}</td>`;
+      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${crop.totalGrowingDays}</td><td>${crop.harvests}</td><td>${crop.yield}</td><td>${formatPrice(crop.sellPrice)}</td><td>${formatPrice(crop.seedPrice)}</td><td>${formatPrice(crop.profit)}</td>`;
       tbody.appendChild(tr);
     });
   }

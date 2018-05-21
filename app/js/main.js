@@ -150,7 +150,7 @@ function init() {
     });
 
     // Sort crops alphabetically
-    cultivatableCrops.sort((a, b) => a.name > b.name);
+    cultivatableCrops.sort((a, b) => a.name.localeCompare(b.name));
 
     // Update DOM
     const tbody = document.getElementById('results').children[1];

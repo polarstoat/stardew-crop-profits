@@ -138,8 +138,8 @@ function init() {
 
       const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
 
-      cleanCrop.profit = profit;
       cleanCrop.avgProfit = avgProfit;
+      cleanCrop.profit = profit;
 
       cultivatableCrops.push(cleanCrop);
     });

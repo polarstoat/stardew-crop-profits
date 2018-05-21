@@ -80,8 +80,23 @@ function init() {
     return cheapest;
   }
 
-  function formatPrice(num) {
-    return /\.[\d]{3,}/.test(num.toString()) ? num.toFixed(2) : num;
+  /**
+   * Takes a price and formats the number in a friendly way, adding a gold icon beforehand
+   * and a 'g' afterwards
+   *
+   * @param  {number}  price    The price to format
+   * @param  {Boolean} [goldIcon] Whether to display a gold icon before the price
+   * @return {string}           The formatted price
+   *
+   * @see {@link https://stardewvalleywiki.com/Template:Price} for the inspiration for this
+   */
+  function formatPrice(price, goldIcon = true) {
+    const formattedPrice = /\.[\d]{3,}/.test(price.toString()) ? price.toFixed(2) : price;
+
+    if (goldIcon) {
+      return `<span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formattedPrice}g</span>`;
+    }
+    return `${formattedPrice}g`;
   }
 
   /**
@@ -123,6 +138,7 @@ function init() {
 
       const avgProfit = profit / (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
 
+      cleanCrop.profit = profit;
       cleanCrop.avgProfit = avgProfit;
 
       cultivatableCrops.push(cleanCrop);
@@ -140,7 +156,7 @@ function init() {
       // TODO: Use CSS to display icon?
       // TODO: Don't hotlink to Stardew Valley Wiki
       // console.log(crop.name, , );
-      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td><span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formatPrice(crop.avgProfit)}g</span></td>`;
+      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${formatPrice(crop.profit)}</td>`;
       tbody.appendChild(tr);
     });
   }

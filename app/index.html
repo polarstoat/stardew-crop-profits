@@ -40,6 +40,74 @@
 					<input type="number" id="year" class="form-control" placeholder="1" min="1" pattern="\d*">
 				</div>
 			</div>
+			<div class="form-row">
+				<div class="col-6 form-group">
+					<label for="farmingLevel">Farming level</label>
+					<input type="number" id="farmingLevel" class="form-control" placeholder="0" min="0" max="10" pattern="\d*">
+				</div>
+				<div class="col-6 form-group">
+					<label>Professions</label>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="tiller">
+						<label class="form-check-label" for="tiller">Tiller<small class="text-muted d-none d-sm-inline"> (Crops worth 10% more)</small></label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="agriculturist">
+						<label class="form-check-label" for="agriculturist">Agriculturist<small class="text-muted d-none d-sm-inline"> (All crops grow 10% faster)</small></label>
+					</div>
+				</div>
+				<div class="col-6 col-md-4">
+					<div class="form-group">
+						<label>Seeds</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="payForSeeds" checked>
+							<label class="form-check-label" for="payForSeeds">Pay for seeds</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Seed sources</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="generalStore" checked>
+							<label class="form-check-label" for="generalStore">Pierre's<span class="d-none d-sm-inline"> General Store</span></label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="jojaMart" checked>
+							<label class="form-check-label" for="jojaMart">JojaMart</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="oasis" checked>
+							<label class="form-check-label" for="oasis">Oasis</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="travelingCart">
+							<label class="form-check-label" for="travelingCart">Traveling Cart</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-md-4 form-group">
+					<label>Fertilizer</label>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="noFertilizer" name="fertilizer" checked>
+						<label class="form-check-label" for="noFertilizer">None</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="basicFertilizer" name="fertilizer">
+						<label class="form-check-label" for="basicFertilizer">Basic Fertilizer</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="qualityFertilizer" name="fertilizer">
+						<label class="form-check-label" for="qualityFertilizer">Quality Fertilizer</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="speedGro" name="fertilizer">
+						<label class="form-check-label" for="speedGro">Speed-Gro</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="deluxeSpeedGro" name="fertilizer">
+						<label class="form-check-label" for="deluxeSpeedGro"><abbr class="d-sm-none" title="Deluxe">Dlx.</abbr><span class="d-none d-sm-inline">Deluxe</span> Speed-Gro</label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</form>
 	<section class="container">

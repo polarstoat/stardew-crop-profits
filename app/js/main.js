@@ -94,7 +94,7 @@ function init() {
     const formattedPrice = /\.[\d]{3,}/.test(price.toString()) ? price.toFixed(2) : price;
 
     if (goldIcon) {
-      return `<span class="text-nowrap gold"><img src="https://stardewvalleywiki.com/mediawiki/images/thumb/1/10/Gold.png/36px-Gold.png" alt="">${formattedPrice}g</span>`;
+      return `<span class="text-nowrap"><span class="gold-icon"></span>${formattedPrice}g</span>`;
     }
     return `${formattedPrice}g`;
   }
@@ -170,8 +170,6 @@ function init() {
 
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
-      // TODO: Use CSS to display icon?
-      // TODO: Don't hotlink to Stardew Valley Wiki
       tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${crop.totalGrowingDays}</td><td>${crop.harvests}</td><td>${crop.yield}</td><td>${formatPrice(crop.sellPrice)}</td><td>${formatPrice(crop.seedPrice)}</td><td>${formatPrice(crop.profit)}</td>`;
       tbody.appendChild(tr);
     });

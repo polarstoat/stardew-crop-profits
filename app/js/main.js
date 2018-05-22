@@ -170,7 +170,7 @@ function init() {
 
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<th scope="row"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${crop.totalGrowingDays}</td><td>${crop.harvests}</td><td>${crop.yield}</td><td>${formatPrice(crop.sellPrice)}</td><td>${formatPrice(crop.seedPrice)}</td><td>${formatPrice(crop.profit)}</td>`;
+      tr.innerHTML = `<th scope="row" class="text-nowrap"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th><td>${formatPrice(crop.avgProfit)}</td><td>${crop.totalGrowingDays}</td><td>${crop.harvests}</td><td>${crop.yield}</td><td>${formatPrice(crop.sellPrice)}</td><td>${formatPrice(crop.seedPrice)}</td><td>${formatPrice(crop.profit)}</td>`;
       tbody.appendChild(tr);
     });
   }

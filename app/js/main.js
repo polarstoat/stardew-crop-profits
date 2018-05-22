@@ -156,6 +156,18 @@ function init() {
     const tbody = document.getElementById('results').children[1];
     tbody.innerHTML = '';
 
+    // If there aren't any cultivateable crops
+    if (!cultivatableCrops.length) {
+      const tr = document.createElement('tr');
+      tr.classList.add('table-warning');
+      tr.innerHTML = '<td colspan="8">No crops can grow!</td>';
+
+      tbody.appendChild(tr);
+
+      // This effectively exits the update() function, preventing the forEach loop below
+      return;
+    }
+
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
       // TODO: Use CSS to display icon?

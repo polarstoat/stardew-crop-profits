@@ -221,15 +221,26 @@ function init() {
 
   function dateChanged(evt) {
     const element = evt.target;
-    const { id } = element;
+    const { id, value } = element;
 
-    // TODO: Input sanitisation
     if (id === 'day' || id === 'year') {
-      date[id] = Number(element.value);
+      // Disallow any non-integer input (including decimal numbers, negative numbers and E-notation)
+      if (!/^\d+$/.test(value)) return;
+
+      // Disallow 0
+      if (value < 1) return;
+
+      // Disallow > SEASON_LENGTH for the day input
+      if (id === 'day' && value > SEASON_LENGTH) return;
+
+      date[id] = Number(value);
     } else if (id === 'season') {
-      date.season = element.value;
+      // Disallow any string not in SEASONS array
+      if (SEASONS.indexOf(value) === -1) return;
+
+      date.season = value;
     } else {
-      throw new Error();
+      throw new Error('Function dateChanged() was called in an invalid way; its only meant to be used as an event handler for the date inputs');
     }
 
     date.timestamp =

@@ -42,6 +42,20 @@
 			</div>
 			<div class="form-row">
 				<div class="col-6 form-group">
+					<label for="profitType">Show profit as</label>
+					<select id="profitType" class="custom-select">
+						<option value="minimum" selected>Minimum</option>
+						<option value="average">Average</option>
+					</select>
+				</div>
+				<div class="col-6 form-group">
+						<label>Seeds</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="payForSeeds" checked>
+							<label class="form-check-label" for="payForSeeds">Pay for seeds</label>
+						</div>
+					</div>
+				<div class="col-6 form-group">
 					<label for="farmingLevel">Farming level</label>
 					<input type="number" id="farmingLevel" class="form-control" placeholder="0" min="0" max="10" pattern="\d*">
 				</div>
@@ -57,13 +71,6 @@
 					</div>
 				</div>
 				<div class="col-6 col-md-4">
-					<div class="form-group">
-						<label>Seeds</label>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="payForSeeds" checked>
-							<label class="form-check-label" for="payForSeeds">Pay for seeds</label>
-						</div>
-					</div>
 					<div class="form-group">
 						<label>Seed sources</label>
 						<div class="form-check">

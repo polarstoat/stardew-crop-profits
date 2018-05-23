@@ -2,59 +2,84 @@ $very-pale-yellow: #fff4d9;
 $dark-brown: #4d3526;
 
 body {
-	background-color: lighten($very-pale-yellow, 2%);
-	color: $dark-brown;
+  background-color: lighten($very-pale-yellow, 2%);
+  color: $dark-brown;
 }
-header h1 {
-	margin-top: .5rem;
-}
-.date-form {
-	margin: 1.25rem 0;
-	padding-top: .75rem;
-}
-.stardew-valley-menu-style {
-	/* Gradient as that used in Stardew Valley menus, see MenuTiles.png */
-	background: linear-gradient(0deg, #eba867 0%, #ffcb7b 100%);
-	/* box-shadow used to create a multiple border effect. Colours from the border used on Stardew Valley menus, see MenuTiles.png */
-	box-shadow: 0 0 0 2px #d68f54, 0 0 0 4px #853605, 0 0 0 6px #fa9305, 0 0 0 8px #b14e05, 0 0 0 10px #5b2b2a;
-}
-.stardew-valley-menu-style {
-	label {
-		color: #5b2b2a;
-	}
-	.form-control, .custom-select {
-		background-color: $very-pale-yellow;
-		border-color: #d68f54;
-		color: $dark-brown;
 
-		&:focus {
-			box-shadow: 0 0 0 .2rem rgba(250,147,5,.35);
-		}
-	}
-	.form-control::placeholder {
-		color: #a3795f;
-	}
+header {
+  h1 {
+    margin-top: .5rem;
+  }
 }
-.table thead th {
-	border-top: none;
+
+.date-form {
+  margin: 1.25rem 0;
+  padding-top: .75rem;
 }
-.table td[colspan="8"] {
-	text-align: center;
+
+.stardew-valley-menu-style {
+  // Gradient as that used in Stardew Valley menus, see MenuTiles.png
+  $gradient: #eba867, #ffcb7b;
+  background: linear-gradient(0deg, nth($gradient, 1) 0%, nth($gradient, 2) 100%);
+  // box-shadow used to create a multiple border effect. Colours from the border used on Stardew Valley menus, see MenuTiles.png
+  $border: #d68f54, #853605, #fa9305, #b14e05, #5b2b2a;
+  box-shadow: 0 0 0 2px nth($border, 1), 0 0 0 4px nth($border, 2), 0 0 0 6px nth($border, 3), 0 0 0 8px nth($border, 4), 0 0 0 10px nth($border, 5);
+
+  label {
+    $label-text: #5b2b2a;
+    color: $label-text;
+  }
+
+  .form-control,
+  .custom-select {
+    $input-border: #d68f54;
+    background-color: $very-pale-yellow;
+    border-color: $input-border;
+    color: $dark-brown;
+
+    &:focus {
+      $input-glow: rgba(250, 147, 5, .35);
+      box-shadow: 0 0 0 .2rem  $input-glow;
+    }
+  }
+
+  .form-control {
+    ::placeholder {
+      $placeholder-text: #a3795f;
+      color: $placeholder-text;
+    }
+  }
 }
+
+.table {
+  thead {
+    th {
+      border-top: 0;
+    }
+  }
+
+  td {
+    [colspan='8'] {
+      text-align: center;
+    }
+  }
+}
+
 .gold-icon {
-	background: url('../img/gold@2x.png');
-	background-size: 9px;
-	display: inline-block;
-	width: 9px;
-	height: 9px;
-	margin-right: 5px;
+  background: url('../img/gold@2x.png');
+  background-size: 9px;
+  display: inline-block;
+  height: 9px;
+  margin-right: 5px;
+  width: 9px;
 }
+
 .crop-icon {
-	background: url('../img/springobjects@2x.png');
-	background-size: 384px 544px;
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	margin-right: 5px;
+  background: url('../img/springobjects@2x.png');
+  background-size: 384px 544px;
+  display: inline-block;
+  height: 16px;
+  margin-right: 5px;
+  width: 16px;
 }
 

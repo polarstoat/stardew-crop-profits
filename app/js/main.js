@@ -94,7 +94,7 @@ function init() {
     const formattedPrice = /\.[\d]{3,}/.test(price.toString()) ? price.toFixed(2) : price;
 
     if (goldIcon) {
-      return `<span class="text-nowrap"><span class="gold-icon"></span>${formattedPrice}g</span>`;
+      return `<span class="text-nowrap"><span class="icon gold"></span>${formattedPrice}g</span>`;
     }
     return `${formattedPrice}g`;
   }
@@ -171,7 +171,7 @@ function init() {
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
       tr.innerHTML =
-        `<th scope="row" class="text-nowrap"><span class="crop-icon" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th>
+        `<th scope="row" class="text-nowrap"><span class="icon crop" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th>
         <td>${formatPrice(crop.avgProfit)}</td>
         <td>${crop.totalGrowingDays}</td>
         <td>${crop.harvests}</td>

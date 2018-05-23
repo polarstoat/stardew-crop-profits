@@ -74,21 +74,19 @@ header {
   }
 }
 
-.gold-icon {
-  background: url('../img/gold@2x.png');
-  background-size: 9px;
+.icon {
   display: inline-block;
-  height: 9px;
   margin-right: 5px;
-  width: 9px;
-}
 
-.crop-icon {
-  background: url('../img/springobjects@2x.png');
-  background-size: 384px 544px;
-  display: inline-block;
-  height: 16px;
-  margin-right: 5px;
-  width: 16px;
-}
+  &.gold {
+    background: url('../img/gold@2x.png') center / 9px;
+    height: 9px;
+    width: 9px;
+  }
 
+  &.crop {
+    background: url('../img/springobjects@2x.png') center / 384px 544px;
+    height: 16px;
+    width: 16px;
+  }
+}

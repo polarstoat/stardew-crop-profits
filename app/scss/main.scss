@@ -75,6 +75,8 @@ header {
 }
 
 .icon {
+  // sass-lint:disable-block space-around-operator
+
   display: inline-block;
   margin-right: 5px;
 
@@ -84,45 +86,52 @@ header {
     width: 9px;
   }
 
+  @at-root %normal-sprite {
+    height: 16px;
+    width: 16px;
+  }
+
+  @at-root %springobjects {
+    @extend %normal-sprite;
+    background: url('../img/springobjects@2x.png') center / 384px 544px;
+  }
+
   &.crop {
-    background: url('../img/springobjects@2x.png') center / 384px 544px;
-    height: 16px;
-    width: 16px;
+    @extend %springobjects;
   }
 
-  &.fertilizer {
-    background: url('../img/springobjects@2x.png') center / 384px 544px;
-    height: 16px;
-    width: 16px;
-
-    &.basic-fertilizer {
-      background-position: -128px -240px;
-    }
-
-    &.quality-fertilizer {
-      background-position: -144px -240px;
-    }
-
-    &.speed-gro {
-      background-position: -144px -304px;
-    }
-
-    &.deluxe-speed-gro {
-      background-position: -160px -304px;
-    }
+  &.basic-fertilizer {
+    @extend %springobjects;
+    background-position: -128px -240px;
   }
 
-  &.profession {
+  &.quality-fertilizer {
+    @extend %springobjects;
+    background-position: -144px -240px;
+  }
+
+  &.speed-gro {
+    @extend %springobjects;
+    background-position: -144px -304px;
+  }
+
+  &.deluxe-speed-gro {
+    @extend %springobjects;
+    background-position: -160px -304px;
+  }
+
+  @at-root %profession {
+    @extend %normal-sprite;
     background: url('../img/professions@2x.png') center / 96px 80px;
-    height: 16px;
-    width: 16px;
+  }
 
-    &.tiller {
-      background-position: -16px 0;
-    }
+  &.tiller {
+    @extend %profession;
+    background-position: -16px 0;
+  }
 
-    &.agriculturist {
-      background-position: -80px 0;
-    }
+  &.agriculturist {
+    @extend %profession;
+    background-position: -80px 0;
   }
 }

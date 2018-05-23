@@ -307,6 +307,18 @@ function init() {
     if (crops.length) update();
   }
 
+  function seedSourcesChanged(evt) {
+    const element = evt.target;
+    const { id } = element;
+
+    // This surreal way of using .hasOwnProperty() is because of https://eslint.org/docs/rules/no-prototype-builtins
+    if (!Object.prototype.hasOwnProperty.call(options.vendors, id)) return;
+
+    options.vendors[id] = element.checked;
+
+    if (crops.length) update();
+  }
+
   /**
    * Add event listeners to inputs
    */
@@ -320,6 +332,11 @@ function init() {
 
     document.getElementById('tiller').addEventListener('change', professionChanged);
     document.getElementById('agriculturist').addEventListener('change', professionChanged);
+
+    document.getElementById('generalStore').addEventListener('change', seedSourcesChanged);
+    document.getElementById('jojaMart').addEventListener('change', seedSourcesChanged);
+    document.getElementById('oasis').addEventListener('change', seedSourcesChanged);
+    document.getElementById('travelingCart').addEventListener('change', seedSourcesChanged);
   }
   bindUI();
 

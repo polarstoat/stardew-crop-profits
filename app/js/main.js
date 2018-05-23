@@ -280,6 +280,18 @@ function init() {
   function payForSeedsChanged(evt) {
     options.payForSeeds = evt.target.checked;
 
+    if (!options.payForSeeds) {
+      document.getElementById('generalStore').disabled = true;
+      document.getElementById('jojaMart').disabled = true;
+      document.getElementById('oasis').disabled = true;
+      document.getElementById('travelingCart').disabled = true;
+    } else {
+      document.getElementById('generalStore').disabled = false;
+      document.getElementById('jojaMart').disabled = false;
+      document.getElementById('oasis').disabled = false;
+      document.getElementById('travelingCart').disabled = false;
+    }
+
     if (crops.length) update();
   }
 

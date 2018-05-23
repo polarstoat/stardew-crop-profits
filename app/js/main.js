@@ -139,8 +139,12 @@ function init() {
       let cropYield = crop.harvest.minHarvest || 1;
       if (options.includeChanceForExtraCrops) cropYield += (crop.harvest.chanceForExtraCrops || 0);
 
-      // TODO: Add 'Tiller' profession crop value multiplier
-      const revenue = crop.sellPrice * harvests * cropYield;
+      let adjustedSellPrice = crop.sellPrice;
+
+      // Calculate tiller bonus, see Object.cs::sellToStorePrice()
+      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
+
+      const revenue = adjustedSellPrice * harvests * cropYield;
 
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice;
@@ -152,6 +156,7 @@ function init() {
       cleanCrop.totalGrowingDays = totalGrowingDays;
       cleanCrop.harvests = harvests;
       cleanCrop.yield = cropYield;
+      cleanCrop.adjustedSellPrice = adjustedSellPrice;
       cleanCrop.seedPrice = seedPrice;
       cleanCrop.profit = profit;
 
@@ -185,7 +190,7 @@ function init() {
         <td>${crop.totalGrowingDays}</td>
         <td>${crop.harvests}</td>
         <td>${crop.yield}</td>
-        <td>${formatPrice(crop.sellPrice)}</td>
+        <td>${formatPrice(crop.adjustedSellPrice)}</td>
         <td>${formatPrice(crop.seedPrice)}</td>
         <td>${formatPrice(crop.profit)}</td>`;
       tbody.appendChild(tr);

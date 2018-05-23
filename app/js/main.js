@@ -113,6 +113,38 @@ function init() {
     return dayOfYear >= crop.seasonStartDate && dayOfYear + crop.daysToGrow < crop.seasonEndDate;
   }
 
+  /**
+   * Get the chances of harvesting a crop of each quality
+   * @param  {number} farmingLevel Player's farming level, 0-10
+   * @param  {number} [fertilizer]   The ID of the fertilizer used
+   * @return {number[]}              An array of the chances for each crop, starting
+   * with regular, then silver, then gold
+   */
+  function cropQualityChances(farmingLevel, fertilizer = undefined) {
+    let fertilizerBonus = 0;
+
+    if (fertilizer) {
+      if (fertilizer === 368) fertilizerBonus = 1;
+      else if (fertilizer === 369) fertilizerBonus = 2;
+      else throw new Error(`Invalid fertilizer passed: '${fertilizer}'`);
+    }
+
+    // Calculation for goldChance same as Crop.cs::harvest() but with brackets added for readability
+    const goldChance = (0.2 * (farmingLevel / 10.0))
+      + (0.2 * fertilizerBonus * ((farmingLevel + 2.0) / 12.0))
+      + 0.01;
+
+    // Calculation for silverChance same as Crop.cs::harvest()
+    let silverChance = Math.min(0.75, goldChance * 2.0);
+    // But because it is in an `else if` after the goldChance calculation, we have to
+    // multiply it by the chance of it being NOT gold (i.e. 1 - goldChance)
+    silverChance *= 1 - goldChance;
+
+    const regularChance = 1 - goldChance - silverChance;
+
+    return [regularChance, silverChance, goldChance];
+  }
+
   function update() {
     const cultivatableCrops = [];
 

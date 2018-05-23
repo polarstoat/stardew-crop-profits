@@ -119,6 +119,10 @@ function init() {
 
       if (!canGrow(crop, dayOfYear)) return;
 
+      // Exclude year 2 crops
+      if (crop.seed.vendor.generalStore &&
+        date.year < crop.seed.vendor.generalStore.yearAvailable) return;
+
       let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
       else if (!options.payForSeeds) seedPrice = 0;

@@ -90,6 +90,28 @@ header {
     width: 16px;
   }
 
+  &.fertilizer {
+    background: url('../img/springobjects@2x.png') center / 384px 544px;
+    height: 16px;
+    width: 16px;
+
+    &.basic-fertilizer {
+      background-position: -128px -240px;
+    }
+
+    &.quality-fertilizer {
+      background-position: -144px -240px;
+    }
+
+    &.speed-gro {
+      background-position: -144px -304px;
+    }
+
+    &.deluxe-speed-gro {
+      background-position: -160px -304px;
+    }
+  }
+
   &.profession {
     background: url('../img/professions@2x.png') center / 96px 80px;
     height: 16px;

@@ -42,6 +42,7 @@ function init() {
   const SEASONS = ['spring', 'summer', 'fall', 'winter'];
   const SEASON_LENGTH = 28;
   const YEAR_LENGTH = SEASON_LENGTH * 4;
+  const FINAL_PHASE_LENGTH = 99999;
 
   const crops = [];
   const date = {
@@ -111,8 +112,8 @@ function init() {
    * @param  {number} dayOfYear The day of the year, counted from 0 (e.g. 'Spring 1st' would be 0)
    * @return {boolean}           Whether the crop can grow
    */
-  function canGrow(crop, dayOfYear) {
-    return dayOfYear >= crop.seasonStartDate && dayOfYear + crop.daysToGrow < crop.seasonEndDate;
+  function canGrow(crop, daysToGrow, dayOfYear) {
+    return dayOfYear >= crop.seasonStartDate && dayOfYear + daysToGrow < crop.seasonEndDate;
   }
 
   /**
@@ -160,11 +161,48 @@ function init() {
     const cultivatableCrops = [];
 
     crops.forEach((crop) => {
-      const cleanCrop = crop;
+      // TODO: More elegant way of cloning crop object
+      const cleanCrop = JSON.parse(JSON.stringify(crop));
+
+      if (options.fertilizer === 465 || options.fertilizer === 466 ||
+        professions.agriculturist === true) {
+        // See TerrainFeatures/HoeDirt.cs::plant() for this logic
+        // See also https://stardewvalleywiki.com/Talk:Speed-Gro#Speed-Gro_Mechanics
+
+        let daysToGrow = 0;
+        for (let i = 0; i < crop.phaseDays.length - 1; i += 1) {
+          daysToGrow += crop.phaseDays[i];
+        }
+
+        let growthSpeedBonus = 0;
+        if (options.fertilizer === 465) growthSpeedBonus = 0.1;
+        else if (options.fertilizer === 466) growthSpeedBonus = 0.25;
+        if (professions.agriculturist) growthSpeedBonus += 0.1;
+
+        let daysFaster = Math.ceil(daysToGrow * growthSpeedBonus);
+        // This is neccesary because of a weird rounding error in the game, see https://stardewvalleywiki.com/Talk:Speed-Gro#Floating_point_imprecision
+        // It /should/ only apply to crops that normally grow
+        // in 10 days (Green Bean, Yam, Grape, Coffee Bean)
+        if (daysToGrow === 10 &&
+          (growthSpeedBonus === 0.1 || growthSpeedBonus === 0.2)) daysFaster += 1;
+
+        for (let index1 = 0; daysFaster > 0 && index1 < 3; index1 += 1) {
+          for (let index2 = 0; index2 < cleanCrop.phaseDays.length; index2 += 1) {
+            if (index2 > 0 || cleanCrop.phaseDays[index2] > 1) {
+              cleanCrop.phaseDays[index2] -= 1;
+              daysFaster -= 1;
+            }
+            if (daysFaster <= 0) break;
+          }
+        }
+      }
 
       const dayOfYear = date.timestamp % YEAR_LENGTH;
 
-      if (!canGrow(crop, dayOfYear)) return;
+      const daysToGrow =
+        cleanCrop.phaseDays.slice(0, crop.phaseDays.length - 1).reduce((a, b) => a + b, 0);
+
+      if (!canGrow(crop, daysToGrow, dayOfYear)) return;
 
       // Exclude year 2 crops
       if (crop.seed.vendor.generalStore &&
@@ -173,10 +211,10 @@ function init() {
       let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
       else if (!options.payForSeeds) seedPrice = 0;
+      // TODO: Add pay for fertilizer option?
 
-      // TODO: Add 'Agriculturist' profession multiplier to crop.daysToGrow
       const harvests = (crop.daysToRegrow)
-        ? Math.ceil((crop.seasonEndDate - dayOfYear - crop.daysToGrow) / crop.daysToRegrow)
+        ? Math.ceil((crop.seasonEndDate - dayOfYear - daysToGrow) / crop.daysToRegrow)
         : 1;
 
       let cropYield = crop.harvest.minHarvest || 1;
@@ -205,7 +243,7 @@ function init() {
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice;
 
-      const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + crop.daysToGrow);
+      const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + daysToGrow);
       const avgProfit = profit / totalGrowingDays;
 
       cleanCrop.avgProfit = avgProfit;
@@ -281,8 +319,9 @@ function init() {
 
       if (isWildSeedCrop(crop)) return;
 
-      cleanCrop.daysToGrow = crop.phaseDays.reduce((a, b) => a + b, 0);
       cleanCrop.daysToRegrow = (crop.regrowAfterHarvest === -1) ? 0 : crop.regrowAfterHarvest;
+
+      cleanCrop.phaseDays.push(FINAL_PHASE_LENGTH);
 
       cleanCrop.seasonStartDate = seasonToInt(crop.seasonsToGrowIn[0]) * SEASON_LENGTH;
       cleanCrop.seasonEndDate =

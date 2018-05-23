@@ -119,8 +119,9 @@ function init() {
 
       if (!canGrow(crop, dayOfYear)) return;
 
-      const seedPrice = cheapestSeedPrice(crop.seed);
+      let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
+      else if (!options.payForSeeds) seedPrice = 0;
 
       // TODO: Add 'Agriculturist' profession multiplier to crop.daysToGrow
       const harvests = (crop.daysToRegrow)
@@ -263,13 +264,22 @@ function init() {
     if (crops.length) update();
   }
 
+  function payForSeedsChanged(evt) {
+    options.payForSeeds = evt.target.checked;
+
+    if (crops.length) update();
+  }
+
   /**
-   * Adds event listeners to date inputs
+   * Add event listeners to inputs
    */
   function bindUI() {
+    // Date
     document.getElementById('day').addEventListener('input', dateChanged);
     document.getElementById('season').addEventListener('change', dateChanged);
     document.getElementById('year').addEventListener('input', dateChanged);
+
+    document.getElementById('payForSeeds').addEventListener('change', payForSeedsChanged);
   }
   bindUI();
 

@@ -61,6 +61,10 @@ function init() {
       eggFestival: true,
     },
   };
+  const professions = {
+    tiller: false,
+    agriculturist: false,
+  };
 
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;
@@ -274,6 +278,18 @@ function init() {
     if (crops.length) update();
   }
 
+  function professionChanged(evt) {
+    const element = evt.target;
+    const { id } = element;
+
+    // This surreal way of using .hasOwnProperty() is because of https://eslint.org/docs/rules/no-prototype-builtins
+    if (!Object.prototype.hasOwnProperty.call(professions, id)) return;
+
+    professions[id] = element.checked;
+
+    if (crops.length) update();
+  }
+
   /**
    * Add event listeners to inputs
    */
@@ -284,6 +300,9 @@ function init() {
     document.getElementById('year').addEventListener('input', dateChanged);
 
     document.getElementById('payForSeeds').addEventListener('change', payForSeedsChanged);
+
+    document.getElementById('tiller').addEventListener('change', professionChanged);
+    document.getElementById('agriculturist').addEventListener('change', professionChanged);
   }
   bindUI();
 

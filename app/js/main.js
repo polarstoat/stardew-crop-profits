@@ -52,7 +52,7 @@ function init() {
   };
   const options = {
     farmingLevel: 0,
-    profitType: 'minimum',
+    profitType: 'average',
     payForSeeds: true,
     vendors: {
       generalStore: true,

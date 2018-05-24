@@ -351,6 +351,17 @@ function init() {
     if (crops.length) update();
   }
 
+  function profitTypeChanged(evt) {
+    const element = evt.target;
+    const { value } = element;
+
+    if (['minimum', 'average'].indexOf(value) === -1) return;
+
+    options.profitType = value;
+
+    if (crops.length) update();
+  }
+
   /**
    * Add event listeners to inputs
    */
@@ -369,6 +380,8 @@ function init() {
     document.getElementById('jojaMart').addEventListener('change', seedSourcesChanged);
     document.getElementById('oasis').addEventListener('change', seedSourcesChanged);
     document.getElementById('travelingCart').addEventListener('change', seedSourcesChanged);
+
+    document.getElementById('profitType').addEventListener('change', profitTypeChanged);
   }
   bindUI();
 

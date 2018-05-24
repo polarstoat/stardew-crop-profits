@@ -51,6 +51,7 @@ function init() {
     timestamp: 0,
   };
   const options = {
+    farmingLevel: 0,
     profitType: 'minimum',
     payForSeeds: true,
     vendors: {
@@ -145,6 +146,18 @@ function init() {
     return [regularChance, silverChance, goldChance];
   }
 
+  /**
+   * Calculates the sell price of a particular quality item
+   * @param  {number} basePrice The base price of an object
+   * @param  {number} quality   The quality of an object, as an integer of 0-2
+   * @return {number}           The calculated sell price of an particular item quality
+   */
+  function qualitySellPrice(basePrice, quality) {
+    // See Object.cs::sellToStorePrice()
+    // num = (this.price * (1.0 + (this.quality) * 0.25));
+    return Math.floor(basePrice * (1 + (quality * 0.25)));
+  }
+
   function update() {
     const cultivatableCrops = [];
 
@@ -169,12 +182,25 @@ function init() {
         : 1;
 
       let cropYield = crop.harvest.minHarvest || 1;
+      // TODO: The game uses a while loop to determine if extra crops are harvested, therefore
+      // if crop.harvest.chanceForExtraCrops === 0.2 (like Potatoes), the actual chance would
+      // be 0.2222222 (recurring)
       if (options.profitType === 'average') cropYield += (crop.harvest.chanceForExtraCrops || 0);
 
       let adjustedSellPrice = crop.sellPrice;
+      if (options.profitType === 'average') {
+        adjustedSellPrice = 0;
+
+        cropQualityChances(options.farmingLevel).forEach((chance, quality) => {
+          adjustedSellPrice += qualitySellPrice(crop.sellPrice, quality) * chance;
+        });
+      }
 
       // Calculate tiller bonus, see Object.cs::sellToStorePrice()
-      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
+      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) {
+        if (options.profitType === 'minimum') adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
+        else adjustedSellPrice *= 1.1;
+      }
 
       const revenue = adjustedSellPrice * harvests * cropYield;
 

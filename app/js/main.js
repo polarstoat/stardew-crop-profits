@@ -122,14 +122,11 @@ function init() {
    * @return {number[]}              An array of the chances for each crop, starting
    * with regular, then silver, then gold
    */
-  function cropQualityChances(farmingLevel, fertilizer = undefined) {
+  function cropQualityChances(farmingLevel, fertilizer = 0) {
     let fertilizerBonus = 0;
 
-    if (fertilizer) {
-      if (fertilizer === 368) fertilizerBonus = 1;
-      else if (fertilizer === 369) fertilizerBonus = 2;
-      else throw new Error(`Invalid fertilizer passed: '${fertilizer}'`);
-    }
+    if (fertilizer === 368) fertilizerBonus = 1;
+    else if (fertilizer === 369) fertilizerBonus = 2;
 
     // Calculation for goldChance same as Crop.cs::harvest() but with brackets added for readability
     const goldChance = (0.2 * (farmingLevel / 10.0))
@@ -192,7 +189,7 @@ function init() {
       if (options.profitType === 'average') {
         adjustedSellPrice = 0;
 
-        cropQualityChances(options.farmingLevel).forEach((chance, quality) => {
+        cropQualityChances(options.farmingLevel, options.fertilizer).forEach((chance, quality) => {
           adjustedSellPrice += qualitySellPrice(crop.sellPrice, quality) * chance;
         });
       }

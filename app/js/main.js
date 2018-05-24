@@ -61,6 +61,7 @@ function init() {
       oasis: true,
       eggFestival: true,
     },
+    fertilizer: 0,
   };
   const professions = {
     tiller: false,
@@ -403,6 +404,22 @@ function init() {
     if (crops.length) update();
   }
 
+  function fertilizerChanged(evt) {
+    const element = evt.target;
+    const { id } = element;
+
+    if (['noFertilizer', 'basicFertilizer', 'qualityFertilizer', 'speedGro', 'deluxeSpeedGro'].indexOf(id) === -1) return;
+
+    // See TerrainFeatures/HoeDirt.cs or Data/ObjectInformation for fertilizer IDs
+    if (id === 'noFertilizer') options.fertilizer = 0;
+    else if (id === 'basicFertilizer') options.fertilizer = 368;
+    else if (id === 'qualityFertilizer') options.fertilizer = 369;
+    else if (id === 'speedGro') options.fertilizer = 465;
+    else if (id === 'deluxeSpeedGro') options.fertilizer = 466;
+
+    if (crops.length) update();
+  }
+
   /**
    * Add event listeners to inputs
    */
@@ -425,6 +442,12 @@ function init() {
     document.getElementById('profitType').addEventListener('change', profitTypeChanged);
 
     document.getElementById('farmingLevel').addEventListener('input', farmingLevelChanged);
+
+    document.getElementById('noFertilizer').addEventListener('change', fertilizerChanged);
+    document.getElementById('basicFertilizer').addEventListener('change', fertilizerChanged);
+    document.getElementById('qualityFertilizer').addEventListener('change', fertilizerChanged);
+    document.getElementById('speedGro').addEventListener('change', fertilizerChanged);
+    document.getElementById('deluxeSpeedGro').addEventListener('change', fertilizerChanged);
   }
   bindUI();
 

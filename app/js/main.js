@@ -51,7 +51,7 @@ function init() {
     timestamp: 0,
   };
   const options = {
-    includeChanceForExtraCrops: false,
+    profitType: 'minimum',
     payForSeeds: true,
     vendors: {
       generalStore: true,
@@ -169,7 +169,7 @@ function init() {
         : 1;
 
       let cropYield = crop.harvest.minHarvest || 1;
-      if (options.includeChanceForExtraCrops) cropYield += (crop.harvest.chanceForExtraCrops || 0);
+      if (options.profitType === 'average') cropYield += (crop.harvest.chanceForExtraCrops || 0);
 
       let adjustedSellPrice = crop.sellPrice;
 

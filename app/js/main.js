@@ -247,7 +247,7 @@ function init() {
       const avgProfit = profit / totalGrowingDays;
 
       cleanCrop.avgProfit = avgProfit;
-      cleanCrop.totalGrowingDays = totalGrowingDays;
+      cleanCrop.daysToGrow = daysToGrow;
       cleanCrop.harvests = harvests;
       cleanCrop.yield = cropYield;
       cleanCrop.adjustedSellPrice = adjustedSellPrice;
@@ -281,7 +281,7 @@ function init() {
       tr.innerHTML =
         `<th scope="row" class="text-nowrap"><span class="icon crop" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th>
         <td>${formatPrice(crop.avgProfit)}</td>
-        <td>${crop.totalGrowingDays}</td>
+        <td>${crop.daysToGrow}</td>
         <td>${crop.harvests}</td>
         <td>${crop.yield}</td>
         <td>${formatPrice(crop.adjustedSellPrice)}</td>

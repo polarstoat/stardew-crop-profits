@@ -388,6 +388,21 @@ function init() {
     if (crops.length) update();
   }
 
+  function farmingLevelChanged(evt) {
+    const element = evt.target;
+    const { value } = element;
+
+    // Disallow any non-integer input (including decimal numbers, negative numbers and E-notation)
+    if (!/^\d+$/.test(value)) return;
+
+    // Disallow > 10
+    if (value > 10) return;
+
+    options.farmingLevel = value;
+
+    if (crops.length) update();
+  }
+
   /**
    * Add event listeners to inputs
    */
@@ -408,6 +423,8 @@ function init() {
     document.getElementById('travelingCart').addEventListener('change', seedSourcesChanged);
 
     document.getElementById('profitType').addEventListener('change', profitTypeChanged);
+
+    document.getElementById('farmingLevel').addEventListener('input', farmingLevelChanged);
   }
   bindUI();
 

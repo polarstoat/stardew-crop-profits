@@ -1,6 +1,6 @@
-# This is where compiled and minified SASS goes and would clog up diffs, so
-# only commit when pushing a release to master
-app/css/
+# dist/ is for built, compiled code and is pushed directly to branch origin/gh-pages
+# Therefore it's ignored here
+dist/
 
 # Ignore our data for the moment
 app/js/crops.json

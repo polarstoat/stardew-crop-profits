@@ -208,6 +208,9 @@ function init() {
       if (crop.seed.vendor.generalStore &&
         date.year < crop.seed.vendor.generalStore.yearAvailable) return;
 
+      // Exclude Strawberries if date before 13th Spring, Year 1
+      if (crop.id === 400 && date.timestamp < 12) return;
+
       let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
       else if (!options.payForSeeds) seedPrice = 0;

@@ -15,6 +15,7 @@ const pkginfo = require('pkginfo')(module, 'version');
 
 const $ = gulpLoadPlugins();
 const bs = browserSync.create();
+const { version } = module.exports;
 
 let dev = true;
 
@@ -51,6 +52,7 @@ gulp.task('images', () => gulp.src('app/img/**/*')
 
 gulp.task('html', () => gulp.src('app/*.html')
   .pipe($.plumber())
+  .pipe($.replace('{{ current_version }}', version))
   .pipe($.if(!dev, $.htmlmin({
     collapseWhitespace: true,
   })))
@@ -81,7 +83,6 @@ gulp.task('deploy', (callback) => {
 
   runSequence('build', () => {
     const now = new Date();
-    const { version } = module.exports;
 
     ghPages.publish('dist', {
       message: `Build v${version} at ${now.toISOString()}`,

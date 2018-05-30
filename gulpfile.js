@@ -67,14 +67,11 @@ gulp.task('serve', ['build'], () => {
     server: 'dist',
   });
 
-  gulp.watch([
-    'app/*.html',
-    'app/img/**/*',
-    'app/js/*.json',
-  ]).on('change', bs.reload);
-
   gulp.watch('app/scss/*.scss', ['styles']);
   gulp.watch('app/js/*.js', ['scripts']);
+  gulp.watch('app/js/*.json', ['json']).on('change', bs.reload);
+  gulp.watch('app/img/**/*', ['images']).on('change', bs.reload);
+  gulp.watch('app/*.html', ['html']).on('change', bs.reload);
 });
 
 gulp.task('deploy', (callback) => {

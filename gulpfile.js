@@ -6,12 +6,13 @@
 
 const gulp = require('gulp');
 const gulpLoadPlugins = require('gulp-load-plugins');
-const browserSync = require('browser-sync').create();
+const browserSync = require('browser-sync');
 const del = require('del');
 const runSequence = require('run-sequence');
 const ghPages = require('gh-pages');
 
 const $ = gulpLoadPlugins();
+const bs = browserSync.create();
 
 let dev = true;
 
@@ -26,13 +27,13 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
   }))
   .pipe($.if(dev, $.sourcemaps.write('.')))
   .pipe(gulp.dest('dist/css'))
-  .pipe(browserSync.stream()));
+  .pipe(bs.stream()));
 
 gulp.task('scripts', () => gulp.src('app/js/*.js')
   .pipe($.plumber())
   .pipe($.if(!dev, $.uglifyEs.default()))
   .pipe(gulp.dest('dist/js'))
-  .pipe(browserSync.stream()));
+  .pipe(bs.stream()));
 
 gulp.task('json', () => gulp.src('app/js/*.json')
   .pipe($.plumber())
@@ -60,7 +61,7 @@ gulp.task('build', (cb) => {
 });
 
 gulp.task('serve', ['build'], () => {
-  browserSync.init({
+  bs.init({
     server: 'dist',
   });
 
@@ -68,7 +69,7 @@ gulp.task('serve', ['build'], () => {
     'app/*.html',
     'app/img/**/*',
     'app/js/*.json',
-  ]).on('change', browserSync.reload);
+  ]).on('change', bs.reload);
 
   gulp.watch('app/scss/*.scss', ['styles']);
   gulp.watch('app/js/*.js', ['scripts']);

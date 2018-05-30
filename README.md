@@ -63,7 +63,8 @@
 ├── README.md
 ├── gulpfile.js
 ├── package-lock.json
-└── package.json
+├── package.json
+└── stardew-crop-profits.sublime-project
 ```
 
 Path | Explanation
@@ -77,4 +78,5 @@ Path | Explanation
 `gulpfile.js` | This project uses the task runner [gulp](https://gulpjs.com), the build configuration and tooling for that lives in here
 `package-lock.json` | Created by npm to manage dependency versions. Can be ignored for all purposes
 `package.json` | Where the npm dependencies are listed
+`stardew-crop-profits.sublime-project` | A [Sublime Text project](https://www.sublimetext.com/docs/3/projects.html) file
 

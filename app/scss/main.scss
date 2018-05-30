@@ -36,14 +36,15 @@ header {
 
   label {
     color: $label-text;
+
+    &:not(.form-check-label) {
+      font-size: .875rem;
+      margin-bottom: .375rem;
+    }
   }
 
-  .form-check-label {
-    color: lighten($dark-brown, 10);
-
-    .text-muted {
-      color: lighten($label-text, 10) !important;
-    }
+  .text-muted {
+    color: lighten($label-text, 10) !important;
   }
 
   .form-control,

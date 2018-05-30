@@ -1,4 +1,4 @@
-# Stardew Crop Profits
+# 🌿💰 Stardew Crop Profits
 
 ## Development
 

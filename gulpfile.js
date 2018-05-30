@@ -27,7 +27,9 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
   }))
   .pipe($.if(dev, $.sourcemaps.write('.')))
   .pipe(gulp.dest('dist/css'))
-  .pipe(bs.stream()));
+  .pipe(bs.stream({
+    match: '**/*.css',
+  })));
 
 gulp.task('scripts', () => gulp.src('app/js/*.js')
   .pipe($.plumber())

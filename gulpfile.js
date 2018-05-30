@@ -11,6 +11,8 @@ const del = require('del');
 const runSequence = require('run-sequence');
 const ghPages = require('gh-pages');
 
+const pkginfo = require('pkginfo')(module, 'version');
+
 const $ = gulpLoadPlugins();
 const bs = browserSync.create();
 
@@ -78,7 +80,12 @@ gulp.task('deploy', (callback) => {
   dev = false;
 
   runSequence('build', () => {
-    ghPages.publish('dist', (err) => {
+    const now = new Date();
+    const { version } = module.exports;
+
+    ghPages.publish('dist', {
+      message: `Build v${version} at ${now.toISOString()}`,
+    }, (err) => {
       if (err) throw console.error(err);
 
       callback();

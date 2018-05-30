@@ -37,6 +37,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify-es": "^1.0.4",
+    "pkginfo": "^0.4.1",
     "run-sequence": "^2.2.1"
   }
 }

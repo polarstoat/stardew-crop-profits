@@ -11,13 +11,6 @@ body {
   padding-top: .75rem;
 }
 
-.truncate {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .stardew-valley-menu-style {
   // Gradient as that used in Stardew Valley menus, see MenuTiles.png
   $gradient: #eba867, #ffcb7b;
@@ -31,7 +24,7 @@ body {
   label {
     color: $label-text;
 
-    &:not(.form-check-label) {
+    &:not(.custom-control-label) {
       font-size: .875rem;
       margin-bottom: .375rem;
     }

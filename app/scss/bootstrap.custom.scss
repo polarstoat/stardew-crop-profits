@@ -20,6 +20,8 @@ $input-bg: lighten($body-bg, 0);
 $input-color: $body-color;
 // $input-border-color: $gray-400 !default;
 $input-border-color: $border-color;
+// $input-focus-border-color: lighten($component-active-bg, 25%) !default;
+$input-focus-border-color: darken($border-color, 10);
 // $input-btn-focus-color: rgba($component-active-bg, .25) !default;
 $input-btn-focus-color: rgba(250, 147, 5, .35);
 // $input-placeholder-color: $gray-600 !default;

@@ -12,14 +12,12 @@
 	<script src="js/main.js"></script>
 </head>
 <body>
-	<header>
-		<div class="container">
-			<h1 class="h5 my-2"><a href=".">🌿💰 Stardew Crop Profits</a></h1>
-			<p class="small mb-2">A tool to calculate the profitability of crops in Stardew Valley</p>
-		</div>
+	<header class="container">
+		<h1 class="h5 my-2"><a href=".">🌿💰 Stardew Crop Profits</a></h1>
+		<p class="small mb-2">A tool to calculate the profitability of crops in Stardew Valley</p>
 	</header>
-	<form class="options pt-2 border-top border-bottom">
-		<div class="container">
+	<div class="options-panel pt-2 border-top border-bottom">
+		<form class="container">
 			<div class="form-row">
 				<div class="col-3 form-group">
 					<label for="day">Day</label>
@@ -134,8 +132,8 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 	<section class="container">
 		<div class="table-responsive">
 			<table id="results" class="table">
@@ -160,7 +158,7 @@
 		</div>
 	</section>
 	<footer class="container mb-3">
-		<div><small>Stardew Crop Profits v{{ current_version }}</small></div>
+		<small>Stardew Crop Profits v{{ current_version }}</small>
 	</footer>
 </body>
 </html>

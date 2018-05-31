@@ -1,6 +1,14 @@
 @import 'bootstrap.custom';
 
-.options {
+header {
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.options-panel {
   background: lighten(#ffcb7b, 10);
   color: $primary;
 

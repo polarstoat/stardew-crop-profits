@@ -9,7 +9,9 @@ header {
 }
 
 .inputs-panel {
-  background: lighten(#ffcb7b, 10);
+  $tangerine-sorbet-base: #ffcb7b;
+  $tangerine-sorbet: lighten($tangerine-sorbet-base, 10);
+  background: $tangerine-sorbet;
   color: $primary;
 
   label {

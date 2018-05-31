@@ -3,17 +3,35 @@
 // $primary: $blue !default;
 $primary: #5b2b2a;
 
-// $custom-control-indicator-bg: $gray-300 !default;
-$custom-control-indicator-bg: #fff4d9;
-
-// $custom-select-indicator-color: $gray-800 !default;
-$custom-select-indicator-color: #4d3526;
-
-// $table-border-color: $gray-300 !default;
-$table-border-color: #e5cab4;
+// $body-bg: $white !default;
+$body-bg: lighten(#fff4d9, 7.5);
+// $body-color: $gray-900 !default;
+$body-color: #4d3526;
 
 // $link-hover-decoration: underline !default;
 $link-hover-decoration: none;
+
+// $border-color: $gray-300 !default;
+$border-color: lighten(#d68f54, 20);
+
+// $input-bg: $white !default;
+$input-bg: lighten($body-bg, 0);
+// $input-color: $gray-700 !default;
+$input-color: $body-color;
+// $input-border-color: $gray-400 !default;
+$input-border-color: $border-color;
+// $input-btn-focus-color: rgba($component-active-bg, .25) !default;
+$input-btn-focus-color: rgba(250, 147, 5, .35);
+// $input-placeholder-color: $gray-600 !default;
+$input-placeholder-color: #a3795f;
+
+// $custom-control-indicator-bg: $gray-300 !default;
+$custom-control-indicator-bg: $input-bg;
+// $custom-select-indicator-color: $gray-800 !default;
+$custom-select-indicator-color: $input-color;
+
+// $table-border-color: $gray-300 !default;
+$table-border-color: lighten($border-color, 5);
 
 // Bootstrap and its default variables
 @import 'node_modules/bootstrap/scss/bootstrap';

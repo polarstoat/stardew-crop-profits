@@ -1,29 +1,10 @@
-$very-pale-yellow: #fff4d9;
-$dark-brown: #4d3526;
+@import 'bootstrap.custom';
 
-body {
-  background-color: lighten($very-pale-yellow, 2%);
-  color: $dark-brown;
-}
-
-.date-form {
-  margin: 1.25rem 0;
-  padding-top: .75rem;
-}
-
-.stardew-valley-menu-style {
-  // Gradient as that used in Stardew Valley menus, see MenuTiles.png
-  $gradient: #eba867, #ffcb7b;
-  background: linear-gradient(0deg, nth($gradient, 1) 0%, nth($gradient, 2) 100%);
-  // box-shadow used to create a multiple border effect. Colours from the border used on Stardew Valley menus, see MenuTiles.png
-  $border: #d68f54, #853605, #fa9305, #b14e05, #5b2b2a;
-  box-shadow: 0 0 0 2px nth($border, 1), 0 0 0 4px nth($border, 2), 0 0 0 6px nth($border, 3), 0 0 0 8px nth($border, 4), 0 0 0 10px nth($border, 5);
-
-  $label-text: #5b2b2a;
+.options {
+  background: lighten(#ffcb7b, 15);
+  color: $primary;
 
   label {
-    color: $label-text;
-
     &:not(.custom-control-label) {
       font-size: .875rem;
       margin-bottom: .375rem;
@@ -31,27 +12,7 @@ body {
   }
 
   .text-muted {
-    color: lighten($label-text, 10) !important;
-  }
-
-  .form-control,
-  .custom-select {
-    $input-border: #d68f54;
-    background-color: $very-pale-yellow;
-    border-color: $input-border;
-    color: $dark-brown;
-
-    &:focus {
-      $input-glow: rgba(250, 147, 5, .35);
-      box-shadow: 0 0 0 .2rem  $input-glow;
-    }
-  }
-
-  .form-control {
-    ::placeholder {
-      $placeholder-text: #a3795f;
-      color: $placeholder-text;
-    }
+    color: lighten($primary, 10) !important;
   }
 }
 

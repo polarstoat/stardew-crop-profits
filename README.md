@@ -67,7 +67,7 @@
 └── stardew-crop-profits.sublime-project
 ```
 
-Path | Explanation
+File | Purpose
 --- | ---
 `app/` | This is where the source code lives. The contents of this folder are either compiled and minified by gulp and then copied to `dist/`
 `app/scss/` | The [Sass](https://sass-lang.com) in here is compiled to CSS and copied to `dist/css/`

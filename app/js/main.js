@@ -266,6 +266,15 @@ function init() {
       const cropYield = getYield(crop);
 
       let adjustedSellPrice = crop.sellPrice;
+
+      // Calculate tiller bonus, see Object.cs::sellToStorePrice()
+      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) {
+        if (options.profitType === 'minimum') adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
+        else adjustedSellPrice *= 1.1;
+      }
+
+      const tillerAdjustedSellPrice = adjustedSellPrice;
+
       if (options.profitType === 'average') {
         adjustedSellPrice = 0;
 
@@ -274,13 +283,12 @@ function init() {
         });
       }
 
-      // Calculate tiller bonus, see Object.cs::sellToStorePrice()
-      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) {
-        if (options.profitType === 'minimum') adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
-        else adjustedSellPrice *= 1.1;
-      }
+      let revenue = 0;
 
-      const revenue = adjustedSellPrice * harvests * cropYield;
+      // Multi-yield crops harvested with scythe can all be quality, see Crop.cs::harvest()
+      // ... There are no multi-yield crops harvested with the scythe in practice though
+      if (crop.scythe) revenue = adjustedSellPrice * harvests * cropYield;
+      else revenue = (adjustedSellPrice * harvests * 1) + (tillerAdjustedSellPrice * harvests * (cropYield - 1));
 
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice;

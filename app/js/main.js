@@ -157,6 +157,49 @@ function init() {
     return Math.floor(basePrice * (1 + (quality * 0.25)));
   }
 
+  /**
+   * Gets the yield for a crop, according to options.profitType (e.g. minimum or average)
+   * @param  {Object} crop A crop object
+   * @return {number}      The yield for that crop
+   */
+  function getYield(crop) {
+    let cropYield = 1;
+
+    /*
+     * Functionally this next segment of code is equivalent to cropYield = crop.minHarvest
+     *
+     * This is very strange, but that is how the logic appears to be in decompiled versions
+     * of the game.
+     * In decompiled versions of the game, Random.Next(Int32, Int32) is used, which returns an
+     * integer LESS than the maximum.
+     * And in the game's data files, we can see that minHarvest and maxHarvest are always
+     * integers. Therefore minHarvest + 1 will always be <= maxHarvest.
+     * So when the decompiled game does Math.min(minHarvest + 1, maxHarvest + 1 + other stuff)
+     * The first argument (minHarvest + 1) will always be the returned.
+     * And then when the decompiled game runs Random.Next(minHarvest, minHarvest + 1), the
+     * result will always be minHarvest.
+     */
+    if (crop.harvest.minHarvest > 1 || crop.harvest.maxHarvest > 1) {
+      if (options.profitType === 'minimum') {
+        cropYield = crop.harvest.minHarvest;
+      } else if (options.profitType === 'average') {
+        const min = crop.harvest.minHarvest;
+        const max = Math.min(
+          crop.harvest.minHarvest + 1,
+          crop.harvest.maxHarvest + 1 + options.farmingLevel / crop.harvest.maxHarvestIncreasePerFarmingLevel,
+        ) - 1;
+
+        cropYield = (min + max) / 2;
+      } else throw new Error(`options.profitType was '${options.profitType}', not 'minimum' or 'average', which is unexpected`);
+    }
+
+    if (crop.harvest.chanceForExtraCrops > 0 && options.profitType !== 'minimum') {
+      cropYield += Math.min(0.9, crop.harvest.chanceForExtraCrops);
+    }
+
+    return cropYield;
+  }
+
   function update() {
     const cultivatableCrops = [];
 
@@ -220,11 +263,7 @@ function init() {
         ? Math.ceil((crop.seasonEndDate - dayOfYear - daysToGrow) / crop.daysToRegrow)
         : 1;
 
-      let cropYield = crop.harvest.minHarvest || 1;
-      // TODO: The game uses a while loop to determine if extra crops are harvested, therefore
-      // if crop.harvest.chanceForExtraCrops === 0.2 (like Potatoes), the actual chance would
-      // be 0.2222222 (recurring)
-      if (options.profitType === 'average') cropYield += (crop.harvest.chanceForExtraCrops || 0);
+      const cropYield = getYield(crop);
 
       let adjustedSellPrice = crop.sellPrice;
       if (options.profitType === 'average') {

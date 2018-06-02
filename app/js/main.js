@@ -170,7 +170,7 @@ function init() {
      *
      * This is very strange, but that is how the logic appears to be in decompiled versions
      * of the game.
-     * In decompiled versions of the game, Random.Next(Int32, Int32) is used, which returns an
+     * In decompiled versions of the game, Random.Next(Int32, Int32) is used, which returns an
      * integer LESS than the maximum.
      * And in the game's data files, we can see that minHarvest and maxHarvest are always
      * integers. Therefore minHarvest + 1 will always be <= maxHarvest.
@@ -186,7 +186,8 @@ function init() {
         const min = crop.harvest.minHarvest;
         const max = Math.min(
           crop.harvest.minHarvest + 1,
-          crop.harvest.maxHarvest + 1 + options.farmingLevel / crop.harvest.maxHarvestIncreasePerFarmingLevel,
+          crop.harvest.maxHarvest + 1 +
+            (options.farmingLevel / crop.harvest.maxHarvestIncreasePerFarmingLevel),
         ) - 1;
 
         cropYield = (min + max) / 2;
@@ -288,7 +289,10 @@ function init() {
       // Multi-yield crops harvested with scythe can all be quality, see Crop.cs::harvest()
       // ... There are no multi-yield crops harvested with the scythe in practice though
       if (crop.scythe) revenue = adjustedSellPrice * harvests * cropYield;
-      else revenue = (adjustedSellPrice * harvests * 1) + (tillerAdjustedSellPrice * harvests * (cropYield - 1));
+      else {
+        revenue = (adjustedSellPrice * harvests * 1) +
+          (tillerAdjustedSellPrice * harvests * (cropYield - 1));
+      }
 
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice;

@@ -83,7 +83,7 @@ gulp.task('deploy', (callback) => {
     ghPages.publish('dist', {
       message: `Build at ${now.toISOString()}`,
     }, (err) => {
-      if (err) throw console.error(err);
+      if (err) throw err;
 
       callback();
     });

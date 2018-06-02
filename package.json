@@ -2,8 +2,7 @@
   "name": "stardew-crop-profits",
   "description": "",
   "scripts": {
-    "lint": "eslint --no-ignore .eslintrc.js .",
-    "test": "npm run lint",
+    "test": "gulp lint",
     "start": "gulp"
   },
   "repository": {
@@ -27,6 +26,7 @@
     "gh-pages": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-eslint": "^4.0.2",
     "gulp-htmlmin": "^4.0.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^4.1.0",

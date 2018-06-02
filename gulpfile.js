@@ -16,6 +16,14 @@ const bs = browserSync.create();
 
 let dev = true;
 
+gulp.task('lint', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js', '!node_modules/**'])
+  .pipe($.plumber())
+  .pipe($.eslint({
+    ignore: false,
+  }))
+  .pipe($.eslint.format())
+  .pipe($.eslint.failAfterError()));
+
 gulp.task('styles', () => gulp.src('app/scss/*.scss')
   .pipe($.plumber())
   .pipe($.if(dev, $.sourcemaps.init()))
@@ -31,7 +39,7 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
     match: '**/*.css',
   })));
 
-gulp.task('scripts', () => gulp.src('app/js/*.js')
+gulp.task('scripts', ['lint'], () => gulp.src('app/js/*.js')
   .pipe($.plumber())
   .pipe($.if(!dev, $.uglifyEs.default()))
   .pipe(gulp.dest('dist/js'))

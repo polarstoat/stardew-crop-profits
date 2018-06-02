@@ -122,3 +122,15 @@ header {
     background-position: -80px 0;
   }
 }
+
+footer {
+  color: lighten($body-color, 60);
+
+  a {
+    color: lighten($body-color, 45);
+
+    &:hover {
+      color: lighten($body-color, 30);
+    }
+  }
+}

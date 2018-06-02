@@ -52,7 +52,7 @@ gulp.task('json', () => gulp.src('app/js/*.json')
 
 gulp.task('images', () => gulp.src('app/img/**/*')
   .pipe($.plumber())
-  .pipe($.if(!dev, $.imagemin()))
+  .pipe($.if(!dev, $.cache($.imagemin())))
   .pipe(gulp.dest('dist/img')));
 
 gulp.task('html', () => gulp.src('app/*.html')

@@ -26,6 +26,7 @@
     "gh-pages": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-cache": "^1.0.2",
     "gulp-eslint": "^4.0.2",
     "gulp-htmlmin": "^4.0.0",
     "gulp-if": "^2.0.2",

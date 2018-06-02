@@ -267,31 +267,35 @@ function init() {
       const cropYield = getYield(crop);
 
       let adjustedSellPrice = crop.sellPrice;
+      let adjustedQualitySellPrice = crop.sellPrice;
+
+      if (options.profitType === 'average') {
+        adjustedQualitySellPrice = 0;
+
+        cropQualityChances(options.farmingLevel, options.fertilizer).forEach((chance, quality) => {
+          adjustedQualitySellPrice += qualitySellPrice(crop.sellPrice, quality) * chance;
+        });
+      }
 
       // Calculate tiller bonus, see Object.cs::sellToStorePrice()
       if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) {
-        if (options.profitType === 'minimum') adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
-        else adjustedSellPrice *= 1.1;
-      }
-
-      const tillerAdjustedSellPrice = adjustedSellPrice;
-
-      if (options.profitType === 'average') {
-        adjustedSellPrice = 0;
-
-        cropQualityChances(options.farmingLevel, options.fertilizer).forEach((chance, quality) => {
-          adjustedSellPrice += qualitySellPrice(crop.sellPrice, quality) * chance;
-        });
+        if (options.profitType === 'minimum') {
+          adjustedQualitySellPrice = Math.floor(adjustedQualitySellPrice * 1.1);
+          adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
+        } else {
+          adjustedQualitySellPrice *= 1.1;
+          adjustedSellPrice *= 1.1;
+        }
       }
 
       let revenue = 0;
 
       // Multi-yield crops harvested with scythe can all be quality, see Crop.cs::harvest()
       // ... There are no multi-yield crops harvested with the scythe in practice though
-      if (crop.scythe) revenue = adjustedSellPrice * harvests * cropYield;
+      if (crop.scythe) revenue = adjustedQualitySellPrice * harvests * cropYield;
       else {
-        revenue = (adjustedSellPrice * harvests * 1) +
-          (tillerAdjustedSellPrice * harvests * (cropYield - 1));
+        revenue = (adjustedQualitySellPrice * harvests * 1) +
+          (adjustedSellPrice * harvests * (cropYield - 1));
       }
 
       let profit = revenue;
@@ -304,7 +308,7 @@ function init() {
       cleanCrop.daysToGrow = daysToGrow;
       cleanCrop.harvests = harvests;
       cleanCrop.yield = cropYield;
-      cleanCrop.adjustedSellPrice = adjustedSellPrice;
+      cleanCrop.adjustedSellPrice = adjustedQualitySellPrice;
       cleanCrop.seedPrice = seedPrice;
       cleanCrop.profit = profit;
 

@@ -1,6 +1,5 @@
 {
   "name": "stardew-crop-profits",
-  "version": "0.1.0",
   "description": "",
   "scripts": {
     "lint": "eslint --no-ignore .eslintrc.js .",
@@ -34,11 +33,10 @@
     "gulp-jsonminify": "^1.1.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.2.0",
-    "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify-es": "^1.0.4",
-    "pkginfo": "^0.4.1",
     "run-sequence": "^2.2.1"
-  }
+  },
+  "dependencies": {}
 }

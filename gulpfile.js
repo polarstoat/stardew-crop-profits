@@ -22,7 +22,7 @@ gulp.task('lint', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js', 
     ignore: false,
   }))
   .pipe($.eslint.format())
-  .pipe($.eslint.failAfterError()));
+  .pipe($.if(!browserSync.active, $.eslint.failAfterError())));
 
 gulp.task('styles', () => gulp.src('app/scss/*.scss')
   .pipe($.plumber())

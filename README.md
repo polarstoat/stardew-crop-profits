@@ -1,4 +1,4 @@
-# [🌿💰 Stardew Crop Profits](https://polarstoat.github.io/stardew-crop-profits/)
+# [Stardew Crop Profits](https://polarstoat.github.io/stardew-crop-profits/)
 
 A tool to calculate the profitability of crops in Stardew Valley
 

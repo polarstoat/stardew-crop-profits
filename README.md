@@ -42,7 +42,7 @@ A tool to calculate the profitability of crops in Stardew Valley
    gulp
    ```
 
-2. Run the `deploy` gulp task to publish changes to the `gh-pages` branch
+2. Run the `deploy` gulp task to publish to [GitHub Pages](https://pages.github.com)
 
    ```bash
    gulp deploy

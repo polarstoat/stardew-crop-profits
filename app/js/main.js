@@ -272,9 +272,15 @@ function init() {
       else if (!options.payForSeeds) seedPrice = 0;
       // TODO: Add pay for fertilizer option?
 
-      const harvests = (crop.daysToRegrow)
-        ? Math.ceil((crop.seasonEndDate - dayOfYear - daysToGrow) / crop.daysToRegrow)
-        : 1;
+      let harvests = 1;
+      let growingDays = daysToGrow;
+      if (crop.daysToRegrow) {
+        harvests = Math.ceil((crop.seasonEndDate - dayOfYear - daysToGrow) / crop.daysToRegrow);
+        growingDays = ((harvests - 1) * crop.daysToRegrow) + daysToGrow;
+      } else {
+        harvests = Math.floor((crop.seasonEndDate - dayOfYear - 1) / daysToGrow);
+        growingDays = harvests * daysToGrow;
+      }
 
       const cropYield = getYield(crop);
 
@@ -311,10 +317,10 @@ function init() {
       }
 
       let profit = revenue;
-      if (options.payForSeeds) profit -= seedPrice;
+      if (options.payForSeeds) profit -= seedPrice * (crop.daysToRegrow ? 1 : harvests);
 
-      const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + daysToGrow);
-      const avgProfit = profit / totalGrowingDays;
+      // const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + daysToGrow);
+      const avgProfit = profit / growingDays;
 
       cleanCrop.avgProfit = avgProfit;
       cleanCrop.daysToGrow = daysToGrow;

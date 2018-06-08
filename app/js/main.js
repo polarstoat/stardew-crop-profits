@@ -72,7 +72,7 @@ function init() {
     type: 'bar',
     data: {
       datasets: [{
-        label: 'Gold per Day',
+        label: 'Profit per Day',
       }],
     },
     options: {

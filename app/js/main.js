@@ -68,6 +68,35 @@ function init() {
     tiller: false,
     agriculturist: false,
   };
+  const chart = new Chart('chart', {
+    type: 'bar',
+    data: {
+      datasets: [{
+        label: 'Gold per Day',
+      }],
+    },
+    options: {
+      legend: {
+        display: false,
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Gold per Day',
+          },
+          ticks: {
+            beginAtZero: true,
+          },
+        }],
+        xAxes: [{
+          ticks: {
+            autoSkip: false,
+          },
+        }],
+      },
+    },
+  });
 
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;
@@ -318,6 +347,11 @@ function init() {
     // Sort crops alphabetically
     cultivatableCrops.sort((a, b) => a.name.localeCompare(b.name));
 
+    chart.data.labels = cultivatableCrops.map(crop => crop.name);
+    chart.data.datasets[0].data = cultivatableCrops.map(crop => crop.avgProfit.toFixed(2));
+    chart.data.datasets[0].backgroundColor = cultivatableCrops.map(crop => `rgba(${crop.color[0]}, ${crop.color[1]}, ${crop.color[2]}, 0.5)`);
+    chart.update();
+
     // Update DOM
     const tbody = document.getElementById('results').children[1];
     tbody.innerHTML = '';
@@ -372,26 +406,30 @@ function init() {
   }
 
   function parseCropData(cropData) {
-    Object.values(cropData).forEach((crop) => {
-      const cleanCrop = crop;
+    getJSON('js/colors.json').then((colors) => {
+      Object.values(cropData).forEach((crop) => {
+        const cleanCrop = crop;
 
-      if (isWildSeedCrop(crop)) return;
+        if (isWildSeedCrop(crop)) return;
 
-      cleanCrop.daysToRegrow = (crop.regrowAfterHarvest === -1) ? 0 : crop.regrowAfterHarvest;
+        cleanCrop.daysToRegrow = (crop.regrowAfterHarvest === -1) ? 0 : crop.regrowAfterHarvest;
 
-      cleanCrop.phaseDays.push(FINAL_PHASE_LENGTH);
+        cleanCrop.phaseDays.push(FINAL_PHASE_LENGTH);
 
-      cleanCrop.seasonStartDate = seasonToInt(crop.seasonsToGrowIn[0]) * SEASON_LENGTH;
-      cleanCrop.seasonEndDate =
-        cleanCrop.seasonStartDate + (crop.seasonsToGrowIn.length * SEASON_LENGTH);
+        cleanCrop.color = colors[crop.id];
 
-      const tc = crop.seed.vendor.travelingCart;
-      if (tc) cleanCrop.seed.vendor.travelingCart.avgPrice = (tc.minPrice + tc.maxPrice) / 2;
+        cleanCrop.seasonStartDate = seasonToInt(crop.seasonsToGrowIn[0]) * SEASON_LENGTH;
+        cleanCrop.seasonEndDate =
+          cleanCrop.seasonStartDate + (crop.seasonsToGrowIn.length * SEASON_LENGTH);
 
-      crops.push(cleanCrop);
+        const tc = crop.seed.vendor.travelingCart;
+        if (tc) cleanCrop.seed.vendor.travelingCart.avgPrice = (tc.minPrice + tc.maxPrice) / 2;
+
+        crops.push(cleanCrop);
+      });
+
+      update();
     });
-
-    update();
   }
 
   function dateChanged(evt) {

@@ -3,4 +3,7 @@ module.exports = {
     browser: true,
   },
   extends: 'airbnb-base',
+  globals: {
+    'Chart': false,
+  },
 };

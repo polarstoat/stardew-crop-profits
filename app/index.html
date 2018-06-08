@@ -11,6 +11,7 @@
 
 	<script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" integrity="sha256-CfcERD4Ov4+lKbWbYqXD6aFM9M51gN4GUEtDhkWABMo=" crossorigin="anonymous"></script>
 	<script src="js/main.js"></script>
 </head>
 <body>
@@ -141,6 +142,13 @@
 			</div>
 		</form>
 	</div>
+	<section class="container mb-3">
+		<div class="table-responsive">
+			<div class="chart-container">
+				<canvas id="chart"></canvas>
+			</div>
+		</div>
+	</section>
 	<section class="container">
 		<div class="table-responsive">
 			<table id="results" class="table">

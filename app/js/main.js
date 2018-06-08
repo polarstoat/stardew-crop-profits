@@ -191,23 +191,22 @@ function init() {
      * And then when the decompiled game runs Random.Next(minHarvest, minHarvest + 1), the
      * result will always be minHarvest.
      */
-    if (crop.harvest.minHarvest > 1 || crop.harvest.maxHarvest > 1) {
+    if (crop.minHarvest > 1 || crop.maxHarvest > 1) {
       if (options.profitType === 'minimum') {
-        cropYield = crop.harvest.minHarvest;
+        cropYield = crop.minHarvest;
       } else if (options.profitType === 'average') {
-        const min = crop.harvest.minHarvest;
+        const min = crop.minHarvest;
         const max = Math.min(
-          crop.harvest.minHarvest + 1,
-          crop.harvest.maxHarvest + 1 +
-            (options.farmingLevel / crop.harvest.maxHarvestIncreasePerFarmingLevel),
+          crop.minHarvest + 1,
+          crop.maxHarvest + 1 + (options.farmingLevel / crop.maxHarvestIncreasePerFarmingLevel),
         ) - 1;
 
         cropYield = (min + max) / 2;
       } else throw new Error(`options.profitType was '${options.profitType}', not 'minimum' or 'average', which is unexpected`);
     }
 
-    if (crop.harvest.chanceForExtraCrops > 0 && options.profitType !== 'minimum') {
-      cropYield += Math.min(0.9, crop.harvest.chanceForExtraCrops);
+    if (crop.chanceForExtraCrops > 0 && options.profitType !== 'minimum') {
+      cropYield += Math.min(0.9, crop.chanceForExtraCrops);
     }
 
     return cropYield;
@@ -265,7 +264,7 @@ function init() {
         date.year < crop.seed.vendor.generalStore.yearAvailable) return;
 
       // Exclude Strawberries if date before 13th Spring, Year 1
-      if (crop.id === 400 && date.timestamp < 12) return;
+      if (crop.indexOfHarvest === 400 && date.timestamp < 12) return;
 
       let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
@@ -284,19 +283,19 @@ function init() {
 
       const cropYield = getYield(crop);
 
-      let adjustedSellPrice = crop.sellPrice;
-      let adjustedQualitySellPrice = crop.sellPrice;
+      let adjustedSellPrice = crop.price;
+      let adjustedQualitySellPrice = crop.price;
 
       if (options.profitType === 'average') {
         adjustedQualitySellPrice = 0;
 
         cropQualityChances(options.farmingLevel, options.fertilizer).forEach((chance, quality) => {
-          adjustedQualitySellPrice += qualitySellPrice(crop.sellPrice, quality) * chance;
+          adjustedQualitySellPrice += qualitySellPrice(crop.price, quality) * chance;
         });
       }
 
       // Calculate tiller bonus, see Object.cs::sellToStorePrice()
-      if (professions.tiller && ['Basic -75', 'Basic -79', 'Basic -80'].indexOf(crop.category) !== -1) {
+      if (professions.tiller && [-75, -79, -80].indexOf(crop.category) !== -1) {
         if (options.profitType === 'minimum') {
           adjustedQualitySellPrice = Math.floor(adjustedQualitySellPrice * 1.1);
           adjustedSellPrice = Math.floor(adjustedSellPrice * 1.1);
@@ -310,7 +309,7 @@ function init() {
 
       // Multi-yield crops harvested with scythe can all be quality, see Crop.cs::harvest()
       // ... There are no multi-yield crops harvested with the scythe in practice though
-      if (crop.scythe) revenue = adjustedQualitySellPrice * harvests * cropYield;
+      if (crop.harvestMethod === 1) revenue = adjustedQualitySellPrice * harvests * cropYield;
       else {
         revenue = (adjustedQualitySellPrice * harvests * 1) +
           (adjustedSellPrice * harvests * (cropYield - 1));
@@ -360,7 +359,7 @@ function init() {
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
       tr.innerHTML =
-        `<th scope="row" class="text-nowrap"><span class="icon crop" style="background-position: -${(crop.id % 24) * 16}px -${Math.floor(crop.id / 24) * 16}px;"></span>${crop.name}</th>
+        `<th scope="row" class="text-nowrap"><span class="icon crop" style="background-position: -${(crop.indexOfHarvest % 24) * 16}px -${Math.floor(crop.indexOfHarvest / 24) * 16}px;"></span>${crop.name}</th>
         <td>${formatPrice(crop.avgProfit)}</td>
         <td>${crop.daysToGrow}</td>
         <td>${crop.harvests}</td>
@@ -384,28 +383,16 @@ function init() {
     throw new Error(`Failed to convert season '${str}' to integer`);
   }
 
-  /**
-   * Test if a crop is a wild seed crop, e.g. 'Wild Horseradish', 'Spice Berry', etc.
-   * This code is pretty much identical to what's used in the game's Crop.cs file
-   * @param  {object}  crop A crop object
-   * @return {Boolean}      Whether the crop is a wild seed crop
-   */
-  function isWildSeedCrop(crop) {
-    return crop.rowInSpriteSheet === 23;
-  }
-
   function parseCropData(cropData) {
     fetchJSON('js/colors.json').then((colors) => {
       Object.values(cropData).forEach((crop) => {
         const cleanCrop = crop;
 
-        if (isWildSeedCrop(crop)) return;
-
         cleanCrop.daysToRegrow = (crop.regrowAfterHarvest === -1) ? 0 : crop.regrowAfterHarvest;
 
         cleanCrop.phaseDays.push(FINAL_PHASE_LENGTH);
 
-        cleanCrop.color = colors[crop.id];
+        cleanCrop.color = colors[crop.indexOfHarvest];
 
         cleanCrop.seasonStartDate = seasonToInt(crop.seasonsToGrowIn[0]) * SEASON_LENGTH;
         cleanCrop.seasonEndDate =

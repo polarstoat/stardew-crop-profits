@@ -14,7 +14,7 @@ const ghPages = require('gh-pages');
 const $ = gulpLoadPlugins();
 const bs = browserSync.create();
 
-let dev = true;
+let dev = process.env.NODE_ENV !== 'production';
 
 gulp.task('lint', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js', '!node_modules/**'])
   .pipe($.plumber())

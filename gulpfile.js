@@ -33,6 +33,9 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
   .pipe($.autoprefixer({
     browsers: ['last 2 versions'],
   }))
+  .pipe($.rename({
+    suffix: '.min',
+  }))
   .pipe($.if(dev, $.sourcemaps.write('.')))
   .pipe(gulp.dest('dist/css'))
   .pipe(bs.stream({
@@ -42,6 +45,9 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
 gulp.task('scripts', ['lint'], () => gulp.src('app/js/*.js')
   .pipe($.plumber())
   .pipe($.if(!dev, $.uglifyEs.default()))
+  .pipe($.rename({
+    suffix: '.min',
+  }))
   .pipe(gulp.dest('dist/js'))
   .pipe(bs.stream()));
 

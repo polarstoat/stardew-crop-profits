@@ -22,11 +22,11 @@ header {
   }
 
   .text-muted {
-    color: lighten($primary, 10) !important;
+    color: lighten($primary, 10) !important; // sass-lint:disable-line no-important
   }
 }
 
-.expand-options button {
+.expand-options {
   border: 0;
   display: block;
   margin: -.25rem auto -1rem;
@@ -39,7 +39,9 @@ header {
 
   .chevron {
     // https://github.com/iconic/open-iconic/blob/1.1.1/svg/chevron-bottom.svg
-    background: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="white" d="M1.5 0l-1.5 1.5 4 4 4-4-1.5-1.5-2.5 2.5-2.5-2.5z" transform="translate(0 1)" /></svg>') no-repeat center 60%/50%;
+    $chevron-bottom: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="white" d="M1.5 0l-1.5 1.5 4 4 4-4-1.5-1.5-2.5 2.5-2.5-2.5z" transform="translate(0 1)" /></svg>');
+
+    background: $chevron-bottom no-repeat center 60% / 50%;
     display: block;
     height: 2rem;
     width: 2rem;

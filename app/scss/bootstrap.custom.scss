@@ -7,7 +7,8 @@ $primary: #5b2b2a;
 $body-color: #4d3526;
 
 // $border-color: $gray-300 !default;
-$border-color: lighten(#d68f54, 15);
+$border-color-base: #d68f54;
+$border-color: lighten($border-color-base, 15);
 
 // $input-color: $gray-700 !default;
 $input-color: $body-color;
@@ -21,7 +22,7 @@ $input-btn-focus-color: rgba(250, 147, 5, .35);
 $input-placeholder-color: #a3795f;
 
 // $custom-control-indicator-bg: $gray-300 !default;
-$custom-control-indicator-bg: #ffffff;
+$custom-control-indicator-bg: #fff;
 // $custom-select-indicator-color: $gray-800 !default;
 $custom-select-indicator-color: $input-color;
 

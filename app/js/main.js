@@ -83,7 +83,7 @@ function init() {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Gold per Day',
+            labelString: 'Gold',
           },
           ticks: {
             beginAtZero: true,

@@ -1,40 +1,23 @@
 /**
- * A simple way to GET some JSON. Stolen from http://youmightnotneedjquery.com/#json and then updated to use promises and arrow functions
- * @async
- * @see http://youmightnotneedjquery.com/#json
- * @param  {string} url The URL the JSON you want is at
- * @return {Promise<object>}     The JSON you want, already converted into a JS object
+ * Wraps window.fetch() but returns JSON and throws if response was unsuccessful
+ * (status outside the range 200-299)
+ *
+ * @param  {string} url The resource to load
+ * @return {Promise<object>}     A promise with the parsed JSON data
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
  */
-function getJSON(url) {
-  return new Promise((resolve, reject) => {
-    const request = new XMLHttpRequest();
+function fetchJSON(url) {
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      const err = new Error(`Failed to load resource '${response.url}'`);
+      err.name = response.statusText;
+      err.code = response.status;
+      throw err;
+    }
 
-    request.open('GET', url, true);
-
-    request.addEventListener('load', () => {
-      if (request.status >= 200 && request.status < 400) {
-        // Success!
-        let data;
-
-        try {
-          data = JSON.parse(request.response);
-        } catch (e) {
-          reject(e);
-        }
-
-        resolve(data);
-      } else {
-        // We reached our target server, but it returned an error
-        reject(new Error(`Failed to load resource '${url}': the server responded with a status of ${request.status}`));
-      }
-    });
-
-    request.addEventListener('error', () => {
-      // There was a connection error of some sort
-      reject(new Error('There was a connection error of some sort'));
-    });
-
-    request.send();
+    return response.json();
   });
 }
 
@@ -406,7 +389,7 @@ function init() {
   }
 
   function parseCropData(cropData) {
-    getJSON('js/colors.json').then((colors) => {
+    fetchJSON('js/colors.json').then((colors) => {
       Object.values(cropData).forEach((crop) => {
         const cleanCrop = crop;
 
@@ -583,7 +566,7 @@ function init() {
   }
   bindUI();
 
-  getJSON('js/crops.json').then(parseCropData);
+  fetchJSON('js/crops.json').then(parseCropData);
 }
 
 document.addEventListener('DOMContentLoaded', init);

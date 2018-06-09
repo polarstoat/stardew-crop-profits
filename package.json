@@ -2,7 +2,7 @@
   "name": "stardew-crop-profits",
   "description": "",
   "scripts": {
-    "test": "gulp lint",
+    "test": "gulp lint-js",
     "start": "gulp"
   },
   "repository": {

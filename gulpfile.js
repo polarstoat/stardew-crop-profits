@@ -16,7 +16,7 @@ const bs = browserSync.create();
 
 let dev = process.env.NODE_ENV !== 'production';
 
-gulp.task('lint', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js', '!node_modules/**'])
+gulp.task('lint-js', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js', '!node_modules/**'])
   .pipe($.plumber())
   .pipe($.eslint({
     ignore: false,
@@ -42,7 +42,7 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
     match: '**/*.css',
   })));
 
-gulp.task('scripts', ['lint'], () => gulp.src('app/js/*.js')
+gulp.task('scripts', ['lint-js'], () => gulp.src('app/js/*.js')
   .pipe($.plumber())
   .pipe($.if(!dev, $.uglifyEs.default()))
   .pipe($.rename({

@@ -2,7 +2,7 @@
  * Wraps window.fetch() but returns JSON and throws if response was unsuccessful
  * (status outside the range 200-299)
  *
- * @param  {string} url The resource to load
+ * @param  {string} url The JSON resource to load
  * @return {Promise<object>}     A promise with the parsed JSON data
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -120,6 +120,7 @@ function init() {
 
   /**
    * Checks whether a crop has enough time to grow
+   *
    * @param  {Object} crop      A crop object
    * @param  {number} dayOfYear The day of the year, counted from 0 (e.g. 'Spring 1st' would be 0)
    * @return {boolean}           Whether the crop can grow
@@ -130,6 +131,7 @@ function init() {
 
   /**
    * Get the chances of harvesting a crop of each quality
+   *
    * @param  {number} farmingLevel Player's farming level, 0-10
    * @param  {number} [fertilizer]   The ID of the fertilizer used
    * @return {number[]}              An array of the chances for each crop, starting
@@ -221,8 +223,10 @@ function init() {
 
       if (options.fertilizer === 465 || options.fertilizer === 466 ||
         professions.agriculturist === true) {
-        // See TerrainFeatures/HoeDirt.cs::plant() for this logic
-        // See also https://stardewvalleywiki.com/Talk:Speed-Gro#Speed-Gro_Mechanics
+        /**
+         * @see TerrainFeatures/HoeDirt.cs::plant() for this logic
+         * @see {@link https://stardewvalleywiki.com/Talk:Speed-Gro#Speed-Gro_Mechanics}
+         */
 
         let daysToGrow = 0;
         for (let i = 0; i < crop.phaseDays.length - 1; i += 1) {
@@ -235,9 +239,15 @@ function init() {
         if (professions.agriculturist) growthSpeedBonus += 0.1;
 
         let daysFaster = Math.ceil(daysToGrow * growthSpeedBonus);
-        // This is neccesary because of a weird rounding error in the game, see https://stardewvalleywiki.com/Talk:Speed-Gro#Floating_point_imprecision
-        // It /should/ only apply to crops that normally grow
-        // in 10 days (Green Bean, Yam, Grape, Coffee Bean)
+
+        /**
+         * This is neccesary because of a weird rounding error in the game
+         *
+         * It /should/ only apply to crops that normally grow
+         * in 10 days (Green Bean, Yam, Grape, Coffee Bean)
+         *
+         * @see {@link https://stardewvalleywiki.com/Talk:Speed-Gro#Floating_point_imprecision}
+         */
         if (daysToGrow === 10 &&
           (growthSpeedBonus === 0.1 || growthSpeedBonus === 0.2)) daysFaster += 1;
 
@@ -294,7 +304,10 @@ function init() {
         });
       }
 
-      // Calculate tiller bonus, see Object.cs::sellToStorePrice()
+      /**
+       * Calculate tiller bonus
+       * @see Object.cs::sellToStorePrice()
+       */
       if (professions.tiller && [-75, -79, -80].indexOf(crop.category) !== -1) {
         if (options.profitType === 'minimum') {
           adjustedQualitySellPrice = Math.floor(adjustedQualitySellPrice * 1.1);
@@ -518,7 +531,11 @@ function init() {
 
     if (['noFertilizer', 'basicFertilizer', 'qualityFertilizer', 'speedGro', 'deluxeSpeedGro'].indexOf(id) === -1) return;
 
-    // See TerrainFeatures/HoeDirt.cs or Data/ObjectInformation for fertilizer IDs
+    /**
+     * For fertilizer IDs/indexes:
+     * @see TerrainFeatures/HoeDirt.cs
+     * @see Data/ObjectInformation
+     */
     if (id === 'noFertilizer') options.fertilizer = 0;
     else if (id === 'basicFertilizer') options.fertilizer = 368;
     else if (id === 'qualityFertilizer') options.fertilizer = 369;

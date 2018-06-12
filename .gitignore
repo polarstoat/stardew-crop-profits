@@ -2,6 +2,9 @@
 # Therefore it's ignored here
 dist/
 
+# .tmp/ is for temporary compiled code during development
+.tmp/
+
 # Ignore our data for the moment
 app/js/crops.json
 

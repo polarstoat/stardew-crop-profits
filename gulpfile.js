@@ -12,7 +12,7 @@ const runSequence = require('run-sequence');
 const ghPages = require('gh-pages');
 
 const $ = gulpLoadPlugins();
-const bs = browserSync.create();
+const server = browserSync.create();
 
 let dev = process.env.NODE_ENV !== 'production';
 
@@ -38,7 +38,7 @@ gulp.task('styles', () => gulp.src('app/scss/*.scss')
   }))
   .pipe($.if(dev, $.sourcemaps.write('.')))
   .pipe(gulp.dest('dist/css'))
-  .pipe(bs.stream({
+  .pipe(server.stream({
     match: '**/*.css',
   })));
 
@@ -49,7 +49,7 @@ gulp.task('scripts', ['lint-js'], () => gulp.src('app/js/*.js')
     suffix: '.min',
   }))
   .pipe(gulp.dest('dist/js'))
-  .pipe(bs.stream()));
+  .pipe(server.stream()));
 
 gulp.task('json', () => gulp.src('app/js/*.json')
   .pipe($.plumber())
@@ -77,15 +77,15 @@ gulp.task('build', (cb) => {
 });
 
 gulp.task('serve', ['build'], () => {
-  bs.init({
+  server.init({
     server: 'dist',
   });
 
   gulp.watch('app/scss/*.scss', ['styles']);
   gulp.watch('app/js/*.js', ['scripts']);
-  gulp.watch('app/js/*.json', ['json']).on('change', bs.reload);
-  gulp.watch('app/img/**/*', ['images']).on('change', bs.reload);
-  gulp.watch('app/*.html', ['html']).on('change', bs.reload);
+  gulp.watch('app/js/*.json', ['json']).on('change', server.reload);
+  gulp.watch('app/img/**/*', ['images']).on('change', server.reload);
+  gulp.watch('app/*.html', ['html']).on('change', server.reload);
 });
 
 gulp.task('deploy', (callback) => {

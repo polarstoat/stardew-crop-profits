@@ -1,4 +1,4 @@
-// Variable overrides
+// Variables to override Bootstrap
 
 // $primary: $blue !default;
 $primary: #5b2b2a;
@@ -25,6 +25,3 @@ $input-placeholder-color: #a3795f;
 $custom-control-indicator-bg: #fff;
 // $custom-select-indicator-color: $gray-800 !default;
 $custom-select-indicator-color: $input-color;
-
-// Bootstrap and its default variables
-@import 'node_modules/bootstrap/scss/bootstrap';

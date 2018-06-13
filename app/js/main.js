@@ -546,33 +546,47 @@ function init() {
   }
 
   /**
-   * Add event listeners to inputs
+   * Adds event listeners to each element in elementIDs to call function func()
+   * Adds a 'change' listener by default, or an 'input' listener for <input type="number"> elements
+   *
+   * @param  {string[]} elementIDs An array of the element IDs to add listeners to
+   * @param  {function} func       The function to call when the event happens
+   */
+  function bindElements(elementIDs, func) {
+    elementIDs.forEach((id) => {
+      const element = document.getElementById(id);
+
+      let eventName = 'change';
+      if (element.tagName.toLowerCase() === 'input' && element.type === 'number') eventName = 'input';
+
+      element.addEventListener(eventName, func);
+    });
+  }
+
+  /**
+   * Add all listeners
    */
   function bindUI() {
     // Date
-    document.getElementById('day').addEventListener('input', dateChanged);
-    document.getElementById('season').addEventListener('change', dateChanged);
-    document.getElementById('year').addEventListener('input', dateChanged);
+    bindElements(['day', 'season', 'year'], dateChanged);
 
-    document.getElementById('payForSeeds').addEventListener('change', payForSeedsChanged);
+    // Expenses
+    bindElements(['payForSeeds'], payForSeedsChanged);
 
-    document.getElementById('tiller').addEventListener('change', professionChanged);
-    document.getElementById('agriculturist').addEventListener('change', professionChanged);
+    // Professions
+    bindElements(['tiller', 'agriculturist'], professionChanged);
 
-    document.getElementById('generalStore').addEventListener('change', seedSourcesChanged);
-    document.getElementById('jojaMart').addEventListener('change', seedSourcesChanged);
-    document.getElementById('oasis').addEventListener('change', seedSourcesChanged);
-    document.getElementById('travelingCart').addEventListener('change', seedSourcesChanged);
+    // Seed sourcea
+    bindElements(['generalStore', 'jojaMart', 'oasis', 'travelingCart'], seedSourcesChanged);
 
-    document.getElementById('profitType').addEventListener('change', profitTypeChanged);
+    // Profit type
+    bindElements(['profitType'], profitTypeChanged);
 
-    document.getElementById('farmingLevel').addEventListener('input', farmingLevelChanged);
+    // Farming level
+    bindElements(['farmingLevel'], farmingLevelChanged);
 
-    document.getElementById('noFertilizer').addEventListener('change', fertilizerChanged);
-    document.getElementById('basicFertilizer').addEventListener('change', fertilizerChanged);
-    document.getElementById('qualityFertilizer').addEventListener('change', fertilizerChanged);
-    document.getElementById('speedGro').addEventListener('change', fertilizerChanged);
-    document.getElementById('deluxeSpeedGro').addEventListener('change', fertilizerChanged);
+    // Fertilizer
+    bindElements(['noFertilizer', 'basicFertilizer', 'qualityFertilizer', 'speedGro', 'deluxeSpeedGro'], fertilizerChanged);
   }
   bindUI();
 

@@ -518,9 +518,9 @@ function init() {
     if (!/^\d+$/.test(value)) return;
 
     // Disallow > 10
-    if (value > 10) return;
+    if (Number(value) > 10) return;
 
-    options.farmingLevel = value;
+    options.farmingLevel = Number(value);
 
     if (crops.length) update();
   }

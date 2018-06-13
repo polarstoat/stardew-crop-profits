@@ -6,6 +6,9 @@ $primary: #5b2b2a;
 // $body-color: $gray-900 !default;
 $body-color: #4d3526;
 
+// $text-muted: $gray-600 !default;
+$text-muted: lighten($primary, 15);
+
 // $border-color: $gray-300 !default;
 $border-color-base: #d68f54;
 $border-color: lighten($border-color-base, 15);

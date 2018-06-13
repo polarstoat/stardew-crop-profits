@@ -1,26 +1,3 @@
-/**
- * Wraps window.fetch() but returns JSON and throws if response was unsuccessful
- * (status outside the range 200-299)
- *
- * @param  {string} url The JSON resource to load
- * @return {Promise<object>}     A promise with the parsed JSON data
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
- * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
- */
-function fetchJSON(url) {
-  return fetch(url).then((response) => {
-    if (!response.ok) {
-      const err = new Error(`Failed to load resource '${response.url}'`);
-      err.name = response.statusText;
-      err.code = response.status;
-      throw err;
-    }
-
-    return response.json();
-  });
-}
-
 function init() {
   const SEASONS = ['spring', 'summer', 'fall', 'winter'];
   const SEASON_LENGTH = 28;
@@ -80,6 +57,29 @@ function init() {
       },
     },
   });
+
+  /**
+   * Wraps window.fetch() but returns JSON and throws if response was unsuccessful
+   * (status outside the range 200-299)
+   *
+   * @param  {string} url The JSON resource to load
+   * @return {Promise<object>}     A promise with the parsed JSON data
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
+   */
+  function fetchJSON(url) {
+    return fetch(url).then((response) => {
+      if (!response.ok) {
+        const err = new Error(`Failed to load resource '${response.url}'`);
+        err.name = response.statusText;
+        err.code = response.status;
+        throw err;
+      }
+
+      return response.json();
+    });
+  }
 
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;

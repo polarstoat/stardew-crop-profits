@@ -7,5 +7,20 @@
 		{
 			"path": "node_modules/bootstrap"
 		}
-	]
+	],
+  "build_systems":
+  [
+    {
+      "name": "Serve: Development",
+      "shell_cmd": "gulp serve"
+    },
+    {
+      "name": "Serve: Distribution",
+      "shell_cmd": "gulp serve:dist"
+    },
+    {
+      "name": "Deploy",
+      "shell_cmd": "gulp deploy"
+    }
+  ]
 }

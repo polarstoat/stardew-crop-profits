@@ -64,7 +64,7 @@ This calculation is identical to that on the [Stardew Valley Wiki](https://stard
    git clone https://github.com/polarstoat/stardew-crop-profits.git
    ```
 
-2. Change into the new directory
+2. Change into the new folder
 
    ```bash
    cd stardew-crop-profits/
@@ -78,13 +78,19 @@ This calculation is identical to that on the [Stardew Valley Wiki](https://stard
 
 ### Usage
 
-1. Run the default gulp task for development (this is an alias for `gulp serve`)
+1. Run the default gulp task (an alias for the `serve` task) for development to watch files in the `app/` folder and live reload/inject changes with [Browsersync](https://browsersync.io)
 
    ```bash
    gulp
    ```
 
-2. Run the `deploy` gulp task to publish to [GitHub Pages](https://pages.github.com)
+2. Run the `serve:dist` task to preview a full build before deploying
+
+   ```bash
+   gulp serve:dist
+   ```
+
+3. Run the `deploy` task to publish to [GitHub Pages](https://pages.github.com)
 
    ```bash
    gulp deploy

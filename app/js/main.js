@@ -81,6 +81,14 @@ function init() {
     });
   }
 
+  /**
+   * Returns the cheapest price for the given seed, dependent upon options.vendors
+   * for which vendors are currently enabled
+   * Returns Math.Infinity if no seed source available
+   *
+   * @param  {Object} seed A seed object
+   * @return {number}      The cheapest price for the given seed
+   */
   function cheapestSeedPrice(seed) {
     let cheapest = Infinity;
 
@@ -214,6 +222,10 @@ function init() {
     return cropYield;
   }
 
+  /**
+   * Main update function. (re-)calculates the crops profitability
+   * Called whenever the date or settings is changed
+   */
   function update() {
     const cultivatableCrops = [];
 
@@ -331,7 +343,6 @@ function init() {
       let profit = revenue;
       if (options.payForSeeds) profit -= seedPrice * (crop.daysToRegrow ? 1 : harvests);
 
-      // const totalGrowingDays = (((harvests - 1) * crop.daysToRegrow) + daysToGrow);
       const avgProfit = profit / growingDays;
 
       cleanCrop.avgProfit = avgProfit;
@@ -348,12 +359,13 @@ function init() {
     // Sort crops alphabetically
     cultivatableCrops.sort((a, b) => a.name.localeCompare(b.name));
 
+    // Update chart data
     chart.data.labels = cultivatableCrops.map(crop => crop.name);
     chart.data.datasets[0].data = cultivatableCrops.map(crop => crop.avgProfit.toFixed(2));
     chart.data.datasets[0].backgroundColor = cultivatableCrops.map(crop => `rgba(${crop.color[0]}, ${crop.color[1]}, ${crop.color[2]}, 0.5)`);
     chart.update();
 
-    // Update DOM
+    // Empty table>tbody contents
     const tbody = document.getElementById('results').children[1];
     tbody.innerHTML = '';
 
@@ -369,6 +381,7 @@ function init() {
       return;
     }
 
+    // Re-populate table>tbody
     cultivatableCrops.forEach((crop) => {
       const tr = document.createElement('tr');
       tr.innerHTML =
@@ -396,6 +409,10 @@ function init() {
     throw new Error(`Failed to convert season '${str}' to integer`);
   }
 
+  /**
+   * Parses the given crop data and puts it in the crops array.
+   * @param  {Object} cropData The crop data to parse (as loaded from crops.json)
+   */
   function parseCropData(cropData) {
     fetchJSON('js/colors.json').then((colors) => {
       Object.values(cropData).forEach((crop) => {

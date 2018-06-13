@@ -95,6 +95,7 @@ gulp.task('lint:js', () => gulp.src(['app/**/*.js', '.eslintrc.js', 'gulpfile.js
 
 /**
  * Minify JSON
+ * Note that this task will succeed even if the JSON is invalid
  * @todo Use minified JSON in the source files so this task can be deleted
  * @see https://www.npmjs.com/package/gulp-jsonminify
  */

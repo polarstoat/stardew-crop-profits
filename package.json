@@ -17,7 +17,6 @@
   "homepage": "https://github.com/polarstoat/stardew-crop-profits#readme",
   "private": true,
   "devDependencies": {
-    "bootstrap": "^4.1.1",
     "browser-sync": "^2.24.4",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
@@ -43,5 +42,9 @@
     "gulp-useref": "^3.1.5",
     "run-sequence": "^2.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "chart.js": "^2.7.2",
+    "jquery": "^3.3.1"
+  }
 }

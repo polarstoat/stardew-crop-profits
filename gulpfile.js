@@ -66,7 +66,12 @@ gulp.task('clean', () => del(['.tmp', 'dist']));
 gulp.task('serve', () => {
   runSequence('clean', ['styles', 'scripts'], () => {
     server.init({
-      server: ['.tmp', 'app'],
+      server: {
+        baseDir: ['.tmp', 'app'],
+        routes: {
+          '/node_modules': 'node_modules',
+        },
+      },
     });
 
     gulp.watch(['app/*.html', 'app/img/**/*', 'app/js/*.json']).on('change', server.reload);

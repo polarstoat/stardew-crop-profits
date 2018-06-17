@@ -100,6 +100,9 @@ This calculation is identical to that on the [Stardew Valley Wiki](https://stard
 
 ```
 .
+├── .tmp/
+│   ├── css/
+│   └── js/
 ├── app/
 │   ├── img/
 │   ├── js/
@@ -122,6 +125,7 @@ This calculation is identical to that on the [Stardew Valley Wiki](https://stard
 
 File | Purpose
 --- | ---
+`.tmp/` | A temporary folder automatically created during development with the `serve` gulp task. Contains compiled Sass and JavaScript
 `app/` | Source code of the application. The contents of this folder are compiled and minified by gulp, and then copied to `dist/`
 `dist/` | Compiled and minified, distribution code. The contents of this folder are pushed to GitHub Pages. As this contains entirely 'built' code, this folder is ignored by Git
 `.eslintrc.js` | Configuration for the [ESLint](https://eslint.org) JS linter

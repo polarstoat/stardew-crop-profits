@@ -23,6 +23,7 @@ function init() {
       eggFestival: true,
     },
     fertilizer: 0,
+    greenhouse: false,
   };
   const professions = {
     tiller: false,
@@ -279,23 +280,28 @@ function init() {
       const daysToGrow =
         cleanCrop.phaseDays.slice(0, crop.phaseDays.length - 1).reduce((a, b) => a + b, 0);
 
-      if (!canGrow(crop, daysToGrow, dayOfYear)) return;
+      if (!canGrow(crop, daysToGrow, dayOfYear) && !options.greenhouse) return;
 
       // Exclude year 2 crops
       if (crop.seed.vendor.generalStore &&
         date.year < crop.seed.vendor.generalStore.yearAvailable) return;
 
       // Exclude Strawberries if date before 13th Spring, Year 1
-      if (crop.indexOfHarvest === 400 && date.timestamp < 12) return;
+      if (crop.indexOfHarvest === 400 && date.timestamp < 12 && !options.greenhouse) return;
 
       let seedPrice = cheapestSeedPrice(crop.seed);
       if (options.payForSeeds && seedPrice === Infinity) return;
       else if (!options.payForSeeds) seedPrice = 0;
+      // Seed price is effecitvely 0 for crops that regrow in the greenhouse
+      else if (options.greenhouse && crop.daysToRegrow) seedPrice = 0;
       // TODO: Add pay for fertilizer option?
 
       let harvests = 1;
       let growingDays = daysToGrow;
-      if (crop.daysToRegrow) {
+      if (options.greenhouse) {
+        // For regrowing crops in the greenhouse, initial days to grow is effectively irrelevant
+        growingDays = crop.daysToRegrow ? crop.daysToRegrow : daysToGrow;
+      } else if (crop.daysToRegrow) {
         harvests = Math.ceil((crop.seasonEndDate - dayOfYear - daysToGrow) / crop.daysToRegrow);
         growingDays = ((harvests - 1) * crop.daysToRegrow) + daysToGrow;
       } else {
@@ -344,6 +350,8 @@ function init() {
       if (options.payForSeeds) profit -= seedPrice * (crop.daysToRegrow ? 1 : harvests);
 
       const avgProfit = profit / growingDays;
+
+      if (options.greenhouse) harvests = Infinity;
 
       cleanCrop.avgProfit = avgProfit;
       cleanCrop.daysToGrow = daysToGrow;
@@ -562,6 +570,21 @@ function init() {
     if (crops.length) update();
   }
 
+  function locationChanged(evt) {
+    const element = evt.target;
+    const { id } = element;
+
+    if (id === 'farm') {
+      options.greenhouse = false;
+      document.getElementById('season').disabled = false;
+    } else if (id === 'greenhouse') {
+      options.greenhouse = true;
+      document.getElementById('season').disabled = true;
+    } else return;
+
+    if (crops.length) update();
+  }
+
   /**
    * Adds event listeners to each element in elementIDs to call function func()
    * Adds a 'change' listener by default, or an 'input' listener for <input type="number"> elements
@@ -598,6 +621,9 @@ function init() {
 
     // Profit type
     bindElements(['profitType'], profitTypeChanged);
+
+    // Locations
+    bindElements(['farm', 'greenhouse'], locationChanged);
 
     // Farming level
     bindElements(['farmingLevel'], farmingLevelChanged);

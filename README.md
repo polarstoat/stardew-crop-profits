@@ -13,12 +13,12 @@ A tool to calculate and visualise the profitability of crops in Stardew Valley
 * Which shops the player chooses to buy from, and the cost of seeds only from the players chosen shops
 * The minimum yield for each crop, and the chance for extra crops when harvesting
 * Whether the player buys seeds, or uses the Seed Maker
+* Whether seeds are planted on the farm or in the greenhouse
 
 #### What's NOT accounted for
 
 * The cost of fertilizer, including how long it remains for
 * Daily luck levels
-* Use of the Greenhouse
 * Giant crops
 
 ### The calculations

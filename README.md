@@ -4,22 +4,15 @@ A tool to calculate and visualise the profitability of crops in Stardew Valley
 
 **[Open application →](https://polarstoat.github.io/stardew-crop-profits/)**
 
-### How it works
-
-In Stardew Valley there are many variables that effect the growth and sell prices of crops. Random number generation (RNG) is also used. As such, accurately calculating profitability is *very difficult*. This project aims to be as accurate as possible, and make clear what is and isn't being accounted for in its calculation logic.
-
 #### What's accounted for
 
-* The current in-game date [^1]
+* The current in-game date
 * The ratio of gold:silver:regular quality crops, as determined by farming level and fertilizer used
 * The 'Tiller' and 'Agriculturist' professions
-* The growth speed of a crop, as determined by fertilizer and 'Agriculturist' profession[^2]
+* The growth speed of a crop, as determined by fertilizer and 'Agriculturist' profession
 * Which shops the player chooses to buy from, and the cost of seeds only from the players chosen shops
 * The minimum yield for each crop, and the chance for extra crops when harvesting
 * Whether the player buys seeds, or uses the Seed Maker
-
-[^1]: Excludes crops which are not yet available to the player (e.g. The year 2 crops from Pierre [Garlic, Red Cabbage, and Artichoke], Strawberries [Not available before 13th of Spring, Year 1])
-[^2]: Also emulates the [floating point imprecision](https://stardewvalleywiki.com/Talk:Speed-Gro#Floating_point_imprecision) of the game to ensure results that match the in-game experience
 
 #### What's NOT accounted for
 
@@ -27,8 +20,6 @@ In Stardew Valley there are many variables that effect the growth and sell price
 * Daily luck levels
 * Use of the Greenhouse
 * Giant crops
-
-*These are all planned features*
 
 ### The calculations
 

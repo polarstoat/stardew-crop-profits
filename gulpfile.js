@@ -132,6 +132,13 @@ gulp.task('html', ['styles', 'scripts'], () => gulp.src('app/*.html')
   })))
   .pipe($.if(/\.html$/, $.htmlmin({
     collapseWhitespace: true,
+    minifyCSS: true,
+    minifyJS: true,
+    processConditionalComments: true,
+    removeComments: true,
+    removeEmptyAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
   })))
   .pipe(gulp.dest('dist')));
 

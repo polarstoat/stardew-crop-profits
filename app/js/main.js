@@ -347,7 +347,17 @@ function init() {
       }
 
       let profit = revenue;
-      if (options.payForSeeds) profit -= seedPrice * (crop.daysToRegrow ? 1 : harvests);
+      if (options.payForSeeds) {
+        // As Sunflowers drop 0-2 Sunflower Seeds per harvest, an average of 1 can be
+        // assumed, reducing the overall seed cost for the season
+        // TODO: Check decompiled game for logic that dictates Sunflower seed drops
+        if (crop.indexOfHarvest === 421 && options.profitType === 'average') {
+          // Sunflower's seed price is effectively 0 in greenhouse
+          if (options.greenhouse) seedPrice = 0;
+
+          profit -= seedPrice;
+        } else profit -= seedPrice * (crop.daysToRegrow ? 1 : harvests);
+      }
 
       const avgProfit = profit / growingDays;
 

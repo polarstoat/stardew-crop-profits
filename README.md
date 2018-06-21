@@ -18,6 +18,7 @@ A tool to calculate and visualise the profitability of crops in Stardew Valley
 #### What's NOT accounted for
 
 * The cost of fertilizer, including how long it remains for
+* Selling harvested produce as [Artisan Goods](https://stardewvalleywiki.com/Artisan_Goods), by using Kegs, Preserves Jars and Casks
 * Daily luck levels
 * Giant crops
 

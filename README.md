@@ -42,9 +42,9 @@ This calculation is identical to that on the [Stardew Valley Wiki](https://stard
 
 ### Requirements
 
-* [Node.js](https://nodejs.org/) >=10.1.0
-* [npm](https://www.npmjs.com/get-npm) >=6.0.1
-* [gulp-cli](https://www.npmjs.com/package/gulp-cli) >=2.0.1
+* [Node.js](https://nodejs.org/) >= 11.9.0
+* [npm](https://www.npmjs.com/get-npm) >= 6.9.0
+* [gulp-cli](https://www.npmjs.com/package/gulp-cli) >= 2.0.1
 
 > This project has only been tested with the above requirements, but there is a good chance that it will work with earlier versions
 
